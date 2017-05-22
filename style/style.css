@@ -1,0 +1,19 @@
+.margin-top{
+	margin-top: 50px;
+}
+
+.botton {
+	margin-bottom: 0px;
+}
+
+.logo .img-responsive {
+    margin: 0 auto;
+}
+
+.list-border {
+	border-style: groove;
+}
+
+.center {
+	text-align: center;
+}

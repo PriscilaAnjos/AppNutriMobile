@@ -1,0 +1,89 @@
+<section data-ng-show="Recordatorio.show.home">
+	<h3 class="center">{{Recordatorio.title.home}}</h3>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-border col-xs-12" dir-paginate="recordatorio in Recordatorio.recordatorios|itemsPerPage:5" pagination-id="recordatorio">
+					<p>
+						<strong>Data: </strong>
+						{{recordatorio.data | date:'dd/MM/yyyy' }} - {{recordatorio.dia_da_semana}}
+					</p>
+					<p>
+						<strong>Alimento: </strong>
+						{{recordatorio.alimento}}
+					</p>
+					<p>
+						<strong>Quantidade: </strong>
+						{{recordatorio.quantidade}}
+					</p>
+					<p>
+						<button class="btn btn-warning col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityEdit(recordatorio)">Editar</button>
+						<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.deleteRecordatorio(recordatorio.id)">Deletar</button>
+					</p>
+					<br><br>
+				</div>
+				<dir-pagination-controls pagination-id="recordatorio" max-size="5" boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>		
+
+		<button class="btn btn-primary col-xs-12" data-ng-click="Recordatorio.changeVisibilityNew()">
+			Novo
+		</button>
+		<br>
+	</div>
+</section>
+
+<section data-ng-show="Recordatorio.show.new">
+	
+	<h3 class="center">{{Recordatorio.title.new}}</h3>
+
+	<form name="newForm" action="">
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.alimento.$invalid && !newForm.alimento.$pristine }">
+			<label for="Alimento">Alimento</label>
+			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Recordatorio.formNew.alimento" name="alimento" data-ng-minlength="4" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.quantidade.$invalid && !newForm.quantidade.$pristine }">
+			<label for="Quantidade">Quantidade</label>
+			<input type="number" class="form-control" placeholder="Quantidade" data-ng-model="Recordatorio.formNew.quantidade" name="quantidade" min="1" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.data.$invalid && !newForm.data.$pristine }">
+			<label for="Data">Data</label>
+			<input type="date" class="form-control" data-ng-model="Recordatorio.formNew.data" name="data" required>
+		</div>
+	</form>
+
+	<button data-ng-disabled="newForm.$invalid" class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityNew()">
+		Voltar
+	</button>
+	<button class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.newRecordatorio(Recordatorio.formNew)">
+		Enviar
+	</button>
+</section>
+
+<section data-ng-show="Recordatorio.show.edit">
+	<h3 class="center">{{Recordatorio.title.edit}}</h3>	
+
+	<form name="editForm" action="">
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.alimento.$invalid && !editForm.alimento.$pristine }">
+			<label for="Alimento">Alimento</label>
+			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Recordatorio.formEdit.alimento" name="alimento" data-ng-minlength="4" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.quantidade.$invalid && !editForm.quantidade.$pristine }">
+			<label for="Quantidade">Quantidade</label>
+			<input type="text" class="form-control" placeholder="quantidade" data-ng-model="Recordatorio.formEdit.quantidade" name="quantidade" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.data.$invalid && !editForm.data.$pristine }">
+			<label for="Data">Data</label>
+			<input type="date" class="form-control" data-ng-model="Recordatorio.formEdit.data" name="data" required>
+		</div>
+			<input type="hidden" data-ng-model="Recordatorio.formEdit.id" name="id">
+	</form>
+
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityEdit()">
+		Voltar
+	</button>
+	<button data-ng-disabled="editForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.editRecordatorio(Recordatorio.formEdit)">
+		Enviar
+	</button>
+</section>
