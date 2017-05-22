@@ -1,13 +1,14 @@
+<!-- LISTAGEM DOS RECORDATÓRIOS -->
 <section data-ng-show="$root.show.home">
 	<h3 class="center">{{Recordatorio.title.home}}</h3>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="list-border col-xs-12" dir-paginate="recordatorio in Recordatorio.recordatorios|itemsPerPage:5" pagination-id="recordatorio">
 					<p>
 						<strong>Data: </strong>
-						{{recordatorio.data | date:'dd/MM/yyyy' }} - {{recordatorio.dia_da_semana}}
+						{{recordatorio.data | date:'dd/MM/yyyy' }} - 
+						{{recordatorio.dia_da_semana }}
 					</p>
 					<p>
 						<strong>Alimento: </strong>
@@ -19,14 +20,13 @@
 					</p>
 					<p>
 						<button class="btn btn-warning col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityEdit(recordatorio)">Editar</button>
-						<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.deleteRecordatorio(recordatorio.id)">Deletar</button>
+						<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.changeVisibilityDelete(recordatorio)">Deletar</button>
 					</p>
 					<br><br>
 				</div>
 				<dir-pagination-controls pagination-id="recordatorio" max-size="5" boundary-links="true"></dir-pagination-controls>
 			</div>
 		</div>		
-
 		<button class="btn btn-primary col-xs-12" data-ng-click="Recordatorio.changeVisibilityNew()">
 			Novo
 		</button>
@@ -34,10 +34,9 @@
 	</div>
 </section>
 
+<!-- CADASTRO DE UM NOVO RECORDATÓRIO -->
 <section data-ng-show="$root.show.new">
-	
 	<h3 class="center">{{Recordatorio.title.new}}</h3>
-
 	<form name="newForm" action="">
 		<div class="form-group" data-ng-class="{ 'has-error' : newForm.alimento.$invalid && !newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
@@ -52,18 +51,17 @@
 			<input type="date" class="form-control" data-ng-model="Recordatorio.formNew.data" name="data" required>
 		</div>
 	</form>
-
-	<button data-ng-disabled="newForm.$invalid" class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityNew()">
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityNew()">
 		Voltar
 	</button>
-	<button class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.newRecordatorio(Recordatorio.formNew)">
+	<button data-ng-disabled="newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.newRecordatorio(Recordatorio.formNew)">
 		Enviar
 	</button>
 </section>
 
+<!-- ALTERAÇÃO DE UM RECORDATÓRIO -->
 <section data-ng-show="$root.show.edit">
 	<h3 class="center">{{Recordatorio.title.edit}}</h3>	
-
 	<form name="editForm" action="">
 		<div class="form-group" data-ng-class="{ 'has-error' : editForm.alimento.$invalid && !editForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
@@ -79,11 +77,44 @@
 		</div>
 			<input type="hidden" data-ng-model="Recordatorio.formEdit.id" name="id">
 	</form>
-
 	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityEdit()">
 		Voltar
 	</button>
 	<button data-ng-disabled="editForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.editRecordatorio(Recordatorio.formEdit)">
 		Enviar
+	</button>
+</section>
+
+<!-- CONFIRMAÇÃO PARA A DELEÇÃO DE UM RECORDATÓRIO -->
+<section data-ng-show="$root.show.delete">
+	<h3 class="center">{{Recordatorio.title.delete}}</h3>	
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-border">
+					<p>
+						<strong>Data: </strong>
+						{{Recordatorio.delete.data | date:'dd/MM/yyyy' }} - 
+						{{Recordatorio.delete.data | dayOfWeek }}
+					</p>
+					<p>
+						<strong>Alimento: </strong>
+						{{Recordatorio.delete.alimento}}
+					</p>
+					<p>
+						<strong>Quantidade: </strong>
+						{{Recordatorio.delete.quantidade}}
+					</p>
+				</div>
+				<br><br>
+			</div>
+		</div>
+	</div>	
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Recordatorio.changeVisibilityDelete()">
+		Voltar
+	</button>
+	<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Recordatorio.deleteRecordatorio(Recordatorio.delete.id)">
+		Deletar
 	</button>
 </section>

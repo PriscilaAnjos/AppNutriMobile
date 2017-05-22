@@ -9,7 +9,8 @@ angular.module('appNutri.controllers')
 		$rootScope.show = {
 			home: true,
 			new: false,
-			edit: false
+			edit: false,
+			delete: false
 		};
 
 		const url = {
@@ -22,7 +23,8 @@ angular.module('appNutri.controllers')
 		vm.title = {
 			home: "Recordatório Semanal",
 			new: "Novo",
-			edit: "Edição"			
+			edit: "Edição",
+			delete: "Tem certeza que deseja deletar esse recordatorio?"			
 		};
 
 		vm.recordatorios = [];
@@ -52,8 +54,7 @@ angular.module('appNutri.controllers')
 			const data = {
 				id: 11,
 				email: atual_user,
-				data: recordatorio.data,
-				dia_da_semana: $filter('dayOfWeek')(recordatorio.data),
+				data: new Date(recordatorio.data),
 				alimento: recordatorio.alimento,
 				quantidade: recordatorio.quantidade,
 				nutricionista: atual_nutricionista
@@ -128,10 +129,29 @@ angular.module('appNutri.controllers')
 			$rootScope.show.edit = !($rootScope.show.edit);
 			$rootScope.show.home = !($rootScope.show.home);
 			if($rootScope.show.edit)
-				fillFields(recordatorio);
+				fillFieldsEdit(recordatorio);
 		}
 
-		function fillFields(recordatorio){
+		vm.changeVisibilityDelete = changeVisibilityDelete;
+		function changeVisibilityDelete(recordatorio){		
+			$rootScope.show.delete = !($rootScope.show.delete);
+			$rootScope.show.home = !($rootScope.show.home);
+			if($rootScope.show.delete)
+				fillFieldsDelete(recordatorio);
+		}
+
+		function fillFieldsDelete(recordatorio){
+			vm.delete = {
+				alimento: recordatorio.alimento,
+				quantidade: recordatorio.quantidade,
+				id: recordatorio.id,
+				data: new Date(recordatorio.data.substring(3, 5).toString() + 
+						"/" + recordatorio.data.substring(0, 2).toString() +
+						 "/" + recordatorio.data.substring(6, 10).toString())
+			}
+		}
+
+		function fillFieldsEdit(recordatorio){
 			vm.formEdit = {
 				alimento: recordatorio.alimento,
 				quantidade: recordatorio.quantidade,
