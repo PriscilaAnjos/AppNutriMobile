@@ -1,9 +1,9 @@
 angular.module('appNutri.controllers')
 	.controller('aplicationController', aplicationController);
 
-	aplicationController.$inject = ['$rootScope', '$http', 'manageMessages', '$watch']
+	aplicationController.$inject = ['$rootScope', '$http', 'manageMessages']
 
-	function aplicationController($rootScope, $http, manageMessages, $watch) {
+	function aplicationController($rootScope, $http, manageMessages) {
 		let vm = this;
 		vm.user = [];
 		const url = "";
@@ -24,11 +24,11 @@ angular.module('appNutri.controllers')
 			}
 		}
 
-		vm.func = func;
-		function func(){
-			vm.$watch('li', function(values){
-				console.log(values);
-			});
+		vm.resetValues = resetValues;
+		function resetValues(){
+			$rootScope.show.home = true;
+			$rootScope.show.new = false;
+			$rootScope.show.edit = false;
 		}
 
 	   	console.log("vm", vm);

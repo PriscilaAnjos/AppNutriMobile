@@ -1,18 +1,16 @@
 angular.module('appNutri.controllers')
 	.controller('recordatorioSemanal', recordatorioSemanal);
 
-	recordatorioSemanal.$inject = ['$http', '$rootScope','manageMessages', '$filter', '$localStorage', '$controller'];
+	recordatorioSemanal.$inject = ['$http', '$rootScope','manageMessages', '$filter', '$localStorage'];
 
-	function recordatorioSemanal($http, $rootScope, manageMessages, $filter, $localStorage, $controller) {
+	function recordatorioSemanal($http, $rootScope, manageMessages, $filter, $localStorage) {
 		let vm = this;
 
-
-		vm.applicationController = $controller('aplicationController', {});
-
-		if(vm.applicationController.func()){
-			console.log("recordatorio");
-		}
-
+		$rootScope.show = {
+			home: true,
+			new: false,
+			edit: false
+		};
 
 		const url = {
 			urlget: 'mock/recordatorios.json',
@@ -26,11 +24,7 @@ angular.module('appNutri.controllers')
 			new: "Novo",
 			edit: "Edição"			
 		};
-		vm.show = {
-			home: true,
-			new: false,
-			edit: false
-		};
+
 		vm.recordatorios = [];
 
 		const date = new Date();
@@ -125,15 +119,15 @@ angular.module('appNutri.controllers')
 
 		vm.changeVisibilityNew = changeVisibilityNew;
 		function changeVisibilityNew(){
-			vm.show.new = !(vm.show.new);
-			vm.show.home = !(vm.show.home);
+			$rootScope.show.new = !($rootScope.show.new);
+			$rootScope.show.home = !($rootScope.show.home);
 		}
 
 		vm.changeVisibilityEdit = changeVisibilityEdit;
 		function changeVisibilityEdit(recordatorio){		
-			vm.show.edit = !(vm.show.edit);
-			vm.show.home = !(vm.show.home);
-			if(vm.show.edit)
+			$rootScope.show.edit = !($rootScope.show.edit);
+			$rootScope.show.home = !($rootScope.show.home);
+			if($rootScope.show.edit)
 				fillFields(recordatorio);
 		}
 
