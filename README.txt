@@ -7,7 +7,7 @@ Requisitos:
 
 Execução do app:
 
-- Clone o repositório do Bitbucket no seu computador
+- Clone o repositório no seu computador
 
 - Entre na pasta do projeto
 	cd appnutri/
