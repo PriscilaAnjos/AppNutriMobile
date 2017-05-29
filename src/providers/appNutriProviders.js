@@ -1,1 +1,0 @@
-angular.module('appNutri.providers', [])
