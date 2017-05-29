@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-ng-app="appNutri">
+<head>
+	<title>App Nutri</title>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+	<!-- Bootstrap-->
+	<link rel="stylesheet" type="text/css" href="libs/css/bootstrap.min.css">
+	
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="style/style.css">
+
+</head>
+<body>
+
+	<div data-ng-view></div>
+
+	<!-- Cordova -->
+	<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="libs/js/index.js"></script>
+
+	<!-- Libs -->
+	<script type="application/javascript" src="libs/js/angular.min.js"></script>
+	<script type="application/javascript" src="libs/js/angular-route.min.js"></script>
+	<script type="application/javascript" src="libs/js/jquery.min.js"></script>
+	<script type="application/javascript" src="libs/js/bootstrap.min.js"></script>
+	<script type="application/javascript" src="libs/js/Chart.min.js"></script>
+	<script type="application/javascript" src="libs/js/angular-chart.min.js"></script>
+	<script type="application/javascript" src="libs/js/ngStorage.min.js"></script>
+	<script type="application/javascript" src="libs/js/dirPagination.js"></script>
+	
+	<!-- AngularJS -->
+	
+	<!-- APP -->
+	<script type="application/javascript" src="src/appNutriApp.js"></script>
+
+	<!-- Controllers -->
+	<script type="application/javascript" src="src/controllers/appNutriController.js"></script>
+	<script type="application/javascript" src="src/controllers/loginController.js"></script>
+	<script type="application/javascript" src="src/controllers/aplicationController.js"></script>
+	<script type="application/javascript" src="src/controllers/consumoSemanalController.js"></script>
+	<script type="application/javascript" src="src/controllers/recordatorioSemanalController.js"></script>
+	<script type="application/javascript" src="src/controllers/avaliacaoDieteticaController.js"></script>
+
+	<!-- Routers -->
+	<script type="application/javascript" src="src/routers/routers.js"></script>
+	
+	<!-- Providers -->
+	<script type="application/javascript" src="src/providers/appNutriProviders.js"></script>
+	<script type="application/javascript" src="src/providers/accessFactory.js"></script>
+	<script type="application/javascript" src="src/providers/manageMessagesFactory.js"></script>
+	<script type="application/javascript" src="src/providers/viewFilters.js"></script>
+
+	<!-- Directives -->
+	<script type="application/javascript" src="src/directives/appNutriDirectives.js"></script>
+	<script type="application/javascript" src="src/directives/avaliacaoDieteticaDirective.js"></script>
+	<script type="application/javascript" src="src/directives/consumoSemanalDirective.js"></script>
+	<script type="application/javascript" src="src/directives/recordatorioSemanalDirective.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+.margin-top{
+	margin-top: 15px;
+}
+
+.botton {
+	margin-bottom: 0px;
+}
+
+.logo{
+    margin: 0 auto;
+    max-height: 200px;
+
+}
+
+.list-border {
+	border-style: groove;
+}
+
+.center {
+	text-align: center;
+}

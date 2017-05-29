@@ -1,0 +1,33 @@
+<section class="container">
+
+	<div class="row">
+		<div class="col-xs-12">
+			<h3 class="center">{{Consumo.title}}</h3>
+
+			<div class="margin-top">
+				<canvas 
+					id="doughnut" 
+					height="{{Consumo.height_chart}}"
+					width="{{Consumo.width_chart}}" 
+					class="chart chart-doughnut"
+					chart-data="Consumo.quantidades" 
+					chart-labels="Consumo.alimentos">
+				</canvas> 
+			</div>
+
+			<br>
+				
+			<table class="table">
+				<tr>
+					<th>Alimento</th>
+					<th>Quantidade</th>	
+				</tr>
+				<tr data-ng-repeat="consumo in Consumo.consumos | orderBy:'quantidade':true | limitTo:5">
+					<td>{{consumo.alimento}}</td> 
+					<td>{{consumo.quantidade}}</td> 
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</section>

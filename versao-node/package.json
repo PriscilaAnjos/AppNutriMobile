@@ -1,0 +1,29 @@
+{
+  "name": "appnutri",
+  "version": "1.0.0",
+  "description": "Aplicativo mobile de integração com o sistema AppNutri - Trabalho de Graduação da Faculdade de Tecnologia de Carapicuíba",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/nodemon/bin/nodemon.js server.js"
+  },
+  "keywords": [
+    "nutrição",
+    "appnutri"
+  ],
+  "author": "Priscila Anjos e Anézio Fidalgo",
+  "license": "ISC",
+  "homepage": "",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "angular": "^1.6.3",
+    "angular-chart.js": "^1.1.1",
+    "angular-route": "^1.6.3",
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.2",
+    "ng-storage": "^0.3.2",
+    "jquery": "^3.2.1"
+  }
+}
