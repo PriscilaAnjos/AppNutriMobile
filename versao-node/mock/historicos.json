@@ -1,0 +1,4 @@
+[
+	{"id": "1", "paciente": "Juan", "data": "01/05/2016", "dia_da_semana": "Domingo", "alimento": "banana", "quantidade": "2", "nutricionista": "Joaquim", "refeicao": "Almoço"},
+	{"id": "2", "paciente": "Juan", "data": "01/05/2016", "dia_da_semana": "Domingo", "alimento": "maçã", "quantidade": "5", "nutricionista": "Joaquim", "refeicao": "Jantar"}
+]
