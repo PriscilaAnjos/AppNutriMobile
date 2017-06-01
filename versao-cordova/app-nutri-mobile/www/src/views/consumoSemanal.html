@@ -3,30 +3,35 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3 class="center">{{Consumo.title}}</h3>
+			<div data-ng-show="Consumo.showConsumo">
+				<div class="margin-top">
+					<canvas 
+						id="doughnut" 
+						height="{{Consumo.size_chart.height}}"
+						width="{{Consumo.size_chart.width}}" 
+						class="chart chart-doughnut"
+						chart-data="Consumo.quantidades" 
+						chart-labels="Consumo.alimentos">
+					</canvas> 
+				</div>
 
-			<div class="margin-top">
-				<canvas 
-					id="doughnut" 
-					height="{{Consumo.height_chart}}"
-					width="{{Consumo.width_chart}}" 
-					class="chart chart-doughnut"
-					chart-data="Consumo.quantidades" 
-					chart-labels="Consumo.alimentos">
-				</canvas> 
+				<br>
+					
+				<table class="table">
+					<tr>
+						<th>Alimento</th>
+						<th>Quantidade</th>	
+					</tr>
+					<tr data-ng-repeat="consumo in Consumo.consumos | orderBy:'quantidade':true | limitTo:5">
+						<td>{{consumo.alimento}}</td> 
+						<td>{{consumo.quantidade}}</td> 
+					</tr>
+				</table>
 			</div>
-
-			<br>
-				
-			<table class="table">
-				<tr>
-					<th>Alimento</th>
-					<th>Quantidade</th>	
-				</tr>
-				<tr data-ng-repeat="consumo in Consumo.consumos | orderBy:'quantidade':true | limitTo:5">
-					<td>{{consumo.alimento}}</td> 
-					<td>{{consumo.quantidade}}</td> 
-				</tr>
-			</table>
+			<div data-ng-show="!Consumo.showConsumo">
+				<br>
+				Você ainda não possui nenhum consumo.
+			</div>
 		</div>
 	</div>
 

@@ -43,10 +43,13 @@ angular.module('appNutri.controllers')
 				headers: headers,
 				params: params
 			};
+			console.log(req);
 
 			$http(req).then(function(res) {
+				console.log(res);
 				accessFactory.checkAccess(res.data);
 			}, function(res) {
+				console.log(res);
 				manageMessages.requisitionGetError(res);
 			});
 

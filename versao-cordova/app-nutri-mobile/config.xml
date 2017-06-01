@@ -9,12 +9,16 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <access origin="http://service.appnutri.ntr.br/" />
+    <allow-intent href="http://service.appnutri.ntr.br/" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="http://*/*" />
+    <allow-origin href="http://service.appnutri.ntr.br/" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
