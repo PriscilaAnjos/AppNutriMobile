@@ -9,13 +9,13 @@ angular.module('appNutri.providers')
 
 		function checkAccess(user) {
 			console.log("checkAccess", user);
-			if(user.access == "true"){
-				$rootScope.access = user.access;
+			if(user.perfilUsuario){
+				$rootScope.user = user;
 				$location.path('/index');
 				access = true;
 			}else{
 				$location.path('/');
-				alert("You don't have access");
+				console.log(user);
 			}
 		}
 

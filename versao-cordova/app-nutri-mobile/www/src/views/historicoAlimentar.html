@@ -1,0 +1,137 @@
+<!-- LISTAGEM DOS RECORDATÓRIOS -->
+<section data-ng-show="$root.show.home">
+	<h3 class="center">{{Historico.title.home}}</h3>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-border col-xs-12" dir-paginate="historico in Historico.historicos|itemsPerPage:5" pagination-id="historico">
+					<p>
+						<strong>Data: </strong>
+						{{historico.data | date:'dd/MM/yyyy' }} - 
+						{{historico.dia_da_semana }}
+					</p>
+					<p>
+						<strong>Alimento: </strong>
+						{{historico.alimento}}
+					</p>
+					<p>
+						<strong>Quantidade: </strong>
+						{{historico.quantidade}}
+					</p>
+					<p>
+						<strong>Refeição: </strong>
+						{{historico.refeicao}}
+					</p>
+					<p>
+						<button class="btn btn-warning col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityEdit(historico)">Editar</button>
+						<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Historico.changeVisibilityDelete(historico)">Deletar</button>
+					</p>
+					<br><br>
+				</div>
+				<dir-pagination-controls pagination-id="historico" max-size="5" boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>		
+		<br><br>	
+		<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityNew()">
+			Novo
+		</button>
+		<br><br>
+	</div>
+</section>
+
+<!-- CADASTRO DE UM NOVO RECORDATÓRIO -->
+<section data-ng-show="$root.show.new">
+	<h3 class="center">{{Historico.title.new}}</h3>
+	<form name="newForm" action="">
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.alimento.$invalid && !newForm.alimento.$pristine }">
+			<label for="Alimento">Alimento</label>
+			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Historico.formNew.alimento" name="alimento" data-ng-minlength="4" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.quantidade.$invalid && !newForm.quantidade.$pristine }">
+			<label for="Quantidade">Quantidade</label>
+			<input type="number" class="form-control" placeholder="Quantidade" data-ng-model="Historico.formNew.quantidade" name="quantidade" min="1" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.data.$invalid && !newForm.data.$pristine }">
+			<label for="Data">Data</label>
+			<input type="date" class="form-control" data-ng-model="Historico.formNew.data" name="data" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : newForm.refeicao.$invalid && !newForm.refeicao.$pristine }">
+			<label for="Refeicao">Refeição</label>
+			<input type="text" class="form-control" placeholder="Refeição" data-ng-model="Historico.formNew.refeicao" name="refeicao" required>
+		</div>
+	</form>
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityNew()">
+		Voltar
+	</button>
+	<button data-ng-disabled="newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.newHistorico(Historico.formNew)">
+		Enviar
+	</button>
+</section>
+
+<!-- ALTERAÇÃO DE UM RECORDATÓRIO -->
+<section data-ng-show="$root.show.edit">
+	<h3 class="center">{{Historico.title.edit}}</h3>	
+	<form name="editForm" action="">
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.alimento.$invalid && !editForm.alimento.$pristine }">
+			<label for="Alimento">Alimento</label>
+			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Historico.formEdit.alimento" name="alimento" data-ng-minlength="4" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.quantidade.$invalid && !editForm.quantidade.$pristine }">
+			<label for="Quantidade">Quantidade</label>
+			<input type="text" class="form-control" placeholder="quantidade" data-ng-model="Historico.formEdit.quantidade" name="quantidade" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.data.$invalid && !editForm.data.$pristine }">
+			<label for="Data">Data</label>
+			<input type="date" class="form-control" data-ng-model="Historico.formEdit.data" name="data" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : editForm.refeicao.$invalid && !editForm.refeicao.$pristine }">
+			<label for="Refeicao">Refeição</label>
+			<input type="text" class="form-control" placeholder="Refeição" data-ng-model="Historico.formEdit.refeicao" name="refeicao" required>
+		</div>
+		<input type="hidden" data-ng-model="Historico.formEdit.id" name="id">
+	</form>
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityEdit()">
+		Voltar
+	</button>
+	<button data-ng-disabled="editForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.editHistorico(Historico.formEdit)">
+		Enviar
+	</button>
+</section>
+
+<!-- CONFIRMAÇÃO PARA A DELEÇÃO DE UM RECORDATÓRIO -->
+<section data-ng-show="$root.show.delete">
+	<h3 class="center">{{Historico.title.delete}}</h3>	
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-border">
+					<p>
+						<strong>Data: </strong>
+						{{Historico.delete.data | date:'dd/MM/yyyy' }} - 
+						{{Historico.delete.data | dayOfWeek }}
+					</p>
+					<p>
+						<strong>Alimento: </strong>
+						{{Historico.delete.alimento}}
+					</p>
+					<p>
+						<strong>Quantidade: </strong>
+						{{Historico.delete.quantidade}}
+					</p>
+					<p>
+						<strong>Refeição: </strong>
+						{{Historico.delete.refeicao}}
+					</p>
+				</div>
+				<br><br>
+			</div>
+		</div>
+	</div>	
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityDelete()">
+		Voltar
+	</button>
+	<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Historico.deleteHistorico(Historico.delete.id)">
+		Deletar
+	</button>
+</section>

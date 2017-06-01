@@ -5,20 +5,19 @@ angular.module('appNutri.controllers')
 
 	function loginController($http, accessFactory, manageMessages, $localStorage, $rootScope) {
 		const vm = this;
-		const url = 'mock/login.json';
+		const url = 'http://service.appnutri.ntr.br/Geral.service.php';
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
-
-		//MOCK --> {success: boolean}
-		vm.loginForm = [];
-		vm.loginForm.success = true;	
+	
 		vm.lembreme = false;
 
 		vm.checkLembreme = checkLembreme();
 		function checkLembreme(){
+			console.log("checkLembreme")
 			if($localStorage.user_data){
+				console.log("primeiro if");
 				if($localStorage.user_data.lembreme){
 					vm.loginForm.email = $localStorage.user_data.email;
-					vm.loginForm.password = $localStorage.user_data.password;
+					vm.loginForm.senha = $localStorage.user_data.senha;
 					vm.lembreme = $localStorage.user_data.lembreme;
 				}else{
 					vm.lembreme = false;
@@ -30,17 +29,22 @@ angular.module('appNutri.controllers')
 
 		vm.credentials = credentials;
 		function credentials(user) {
-			$rootScope.email = user.email;
-
+			const params = {
+				op: 'autenticacao',
+				dados: {
+					"email": user.email,
+					"senha": user.senha
+				}
+			}
+			
 			const req = {
 				url: url,
 				method: 'GET',
 				headers: headers,
-				params: user
+				params: params
 			};
 
 			$http(req).then(function(res) {
-				console.log(res);
 				accessFactory.checkAccess(res.data);
 			}, function(res) {
 				manageMessages.requisitionGetError(res);
@@ -54,7 +58,7 @@ angular.module('appNutri.controllers')
 			$localStorage.user_data =  {
 				"lembreme": true,
 				"email": user.email,
-				"password": user.password
+				"senha": user.senha
 			};
 		}
 

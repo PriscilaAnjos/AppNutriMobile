@@ -12,14 +12,14 @@
 	    		<a data-toggle="tab" role="tab" data-target="#consumo">Consumo</a>
 	    	</li>
 	    	<li>
-	    		<a data-toggle="tab" role="tab" data-target="#recordatorio" data-ng-click="appCtrl.resetValues()">Recordatório</a>
+	    		<a data-toggle="tab" role="tab" data-target="#historico" data-ng-click="appCtrl.resetValues()">Histórico</a>
 	    	</li>
 	  	</ul>
 	  
 	  	<div class="tab-content">
 	    	<div class="tab-pane active" id="home">
 	      		<h3>HOME</h3>
-	      		<p>Seja bem vindo {{appCtrl.user.nome}}!</p>
+	      		<p>Seja bem vindo {{appCtrl.user.nomeUsuario}}!</p>
 	    	</div>
 	    	<div id="avaliacao" class="tab-pane">
 	      		<avaliacao-dietetica></avaliacao-dietetica>
@@ -27,8 +27,8 @@
 	    	<div id="consumo" class="tab-pane">
 				<consumo-semanal></consumo-semanal>
 	    	</div>
-	    	<div id="recordatorio" class="tab-pane">
-	      		<recordatorio-semanal></recordatorio-semanal>
+	    	<div id="historico" class="tab-pane">
+	      		<historico-alimentar></historico-alimentar>
 	    	</div>
 	  	</div>
 	</div>
