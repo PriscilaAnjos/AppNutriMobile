@@ -12,14 +12,14 @@
 	    		<a data-toggle="tab" role="tab" data-target="#consumo">Consumo</a>
 	    	</li>
 	    	<li>
-	    		<a data-toggle="tab" role="tab" data-target="#historico" data-ng-click="appCtrl.resetValues()">Histórico</a>
+	    		<a data-toggle="tab" role="tab" data-target="#historico" data-ng-click="Application.resetValues()">Histórico</a>
 	    	</li>
 	  	</ul>
 	  
 	  	<div class="tab-content">
 	    	<div class="tab-pane active" id="home">
-	      		<h3>HOME</h3>
-	      		<p>Seja bem vindo {{appCtrl.user.nomeUsuario}}!</p>
+	      		<h3 class="center">HOME</h3>
+	      		<p>Seja bem vindo {{Application.user.nomeUsuario}}!</p>
 	    	</div>
 	    	<div id="avaliacao" class="tab-pane">
 	      		<avaliacao-dietetica></avaliacao-dietetica>

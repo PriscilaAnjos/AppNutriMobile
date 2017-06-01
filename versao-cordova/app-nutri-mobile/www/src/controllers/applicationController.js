@@ -1,9 +1,9 @@
 angular.module('appNutri.controllers')
-	.controller('aplicationController', aplicationController);
+	.controller('applicationController', applicationController);
 
-	aplicationController.$inject = ['$rootScope', '$http', 'manageMessages']
+	applicationController.$inject = ['$rootScope', '$http', 'manageMessages']
 
-	function aplicationController($rootScope, $http, manageMessages) {
+	function applicationController($rootScope, $http, manageMessages) {
 		const vm = this;
 
 		vm.user = $rootScope.user;

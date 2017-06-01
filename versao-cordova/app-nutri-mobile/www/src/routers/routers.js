@@ -14,8 +14,8 @@ angular.module('appNutri.routers', ['ngRoute'])
 			})
 			.when('/index', {
 				templateUrl: 'src/views/index.html',
-				controller: 'aplicationController',
-				controllerAs: 'appCtrl'
+				controller: 'applicationController',
+				controllerAs: 'Application'
 			})
 	    .otherwise ({ redirectTo: '/' });
 
