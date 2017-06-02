@@ -53,7 +53,7 @@ angular.module('appNutri.controllers')
 
 		vm.newHistorico = newHistorico;
 		function newHistorico(historico) {
-			const params = {
+			const data = {
 				op: requests.post.op,
 				dados: {
 					"id": 11,
@@ -67,7 +67,7 @@ angular.module('appNutri.controllers')
 	 			url: requests.post.op,
 				method: 'POST',
 	 			headers: headers,
-	 			data: params
+	 			data: data
 			}
 
 			$http(req).then(function(res){
@@ -80,12 +80,12 @@ angular.module('appNutri.controllers')
 
 		vm.editHistorico = editHistorico;
 		function editHistorico(historico) {
-			const params = {
+			const data = {
 				op: requests.put.op,
 				dados: {
 					"id": 11,
 					"emailUsuario": email,
-					"dataIngestaoPaciente": historico.data,
+					"dataIngestaoPaciente": $filter('date')(historico.data, 'yyyy-MM-dd'),
 					"nomeAlimento": historico.alimento,
 					"quantidadeIngestaoPaciente": historico.quantidade
 				}
@@ -94,7 +94,7 @@ angular.module('appNutri.controllers')
 	 			url: requests.put.url,
 				method: 'PUT',
 	 			headers: headers,
-	 			data: params
+	 			data: data
 			}
 
 			$http(req).then(function(res){
@@ -107,7 +107,7 @@ angular.module('appNutri.controllers')
 
 		vm.deleteHistorico = deleteHistorico;
 		function deleteHistorico(historico) {
-			const params = {
+			const data = {
 				op: requests.delete.op,
 				dados: { "id": historico }
 			}
@@ -115,7 +115,7 @@ angular.module('appNutri.controllers')
 			    url: requests.delete.url,
 			    method: 'DELETE',
 			    headers: headers,
-			    data: params
+			    data: data
 			};
 
 			$http(req).then(function(res) {
@@ -130,7 +130,7 @@ angular.module('appNutri.controllers')
 			$rootScope.show.new = !($rootScope.show.new);
 			$rootScope.show.home = !($rootScope.show.home);
 			if($rootScope.show.new)
-				resetFields();
+				cleanFields();
 		}
 
 		vm.changeVisibilityEdit = changeVisibilityEdit;
@@ -149,15 +149,9 @@ angular.module('appNutri.controllers')
 				fillFieldsDelete(historico);
 		}
 
-		function resetFields() {
-			const formNull = {
-				id: '',
-				alimento: '',
-				quantidade: '',
-				refeicao: '',
-				data: ''
-			}
-            vm.formNew = angular.copy(formNull);
+		function cleanFields() {
+			const fieldsNull = { id: '', alimento: '', quantidade: '', refeicao: '', data: '' }
+            vm.formNew = angular.copy(fieldsNull);
 			vm.newForm.$setPristine();
 		}
 
