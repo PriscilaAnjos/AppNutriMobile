@@ -24,8 +24,8 @@ angular.module('appNutri.controllers')
 
 			$http(req).then(function(res) {
 				vm.avaliacoes = res.data;
-			}, function(res) {
-				manageMessages.requisitionGetError(res);
+			}, function(res, status) {
+				manageMessages.requisitionGetError(res, status);
 			})
 		}
 

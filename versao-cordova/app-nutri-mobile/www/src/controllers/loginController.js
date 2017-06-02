@@ -49,8 +49,8 @@ angular.module('appNutri.controllers')
 				console.log(res);
 				accessFactory.checkAccess(res.data);
 			}, function(res) {
-				console.log(res);
-				manageMessages.requisitionGetError(res);
+				console.log(res, status);
+				manageMessages.requisitionGetError(res, status);
 			});
 
 			if(vm.lembreme)

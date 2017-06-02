@@ -42,8 +42,8 @@ angular.module('appNutri.controllers')
 
 			$http(req).then(function(res) {
 				vm.historicos = res.data;
-			}, function(res) {
-				manageMessages.requisitionGetError(res);
+			}, function(res, status) {
+				manageMessages.requisitionGetError(res, status);
 			})
 		}
 

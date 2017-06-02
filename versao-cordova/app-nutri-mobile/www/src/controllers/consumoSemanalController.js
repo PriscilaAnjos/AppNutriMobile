@@ -82,8 +82,8 @@ angular.module('appNutri.controllers')
 				}else{
 					console.log("The response is empty");
 				}
-			}), function(res){
-				manageMessages.requisitionGetError(res);
+			}), function(res, status){
+				manageMessages.requisitionGetError(res, status);
 			}
 		}
 	};

@@ -5,8 +5,8 @@ angular.module('appNutri.providers')
 
 	function manageMessages() {
 		
-		function requisitionGetError(res) {
-			console.log("Error", res);
+		function requisitionGetError(res, status) {
+   			console.log("The request failed with response " + response + " and status code " + status);
 		}
 
 		function requisitionPostError(res) {
