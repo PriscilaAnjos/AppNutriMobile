@@ -5,6 +5,26 @@ angular.module('appNutri.controllers')
 
 	function historicoAlimentar($http, $rootScope, manageMessages, $filter, $localStorage) {
 		const vm = this;
+		const requests = {
+			get: {
+				url: 'http://service.appnutri.ntr.br/Geral.service.php',
+				op: "consumoSemana" 
+			},
+			post: {
+				url: 'http://service.appnutri.ntr.br/Geral.service.php',
+				op: ""
+			},
+			put: {
+				url: 'http://service.appnutri.ntr.br/Geral.service.php',
+				op: ""
+			},
+			delete: {
+				url: 'http://service.appnutri.ntr.br/Geral.service.php',
+				op: ""
+			}
+		};
+		const headers = {'Content-type': 'application/json;charset=utf-8'};
+		const email = $rootScope.user.emailUsuario;
 
 		$rootScope.show = {
 			home: true,
@@ -12,57 +32,55 @@ angular.module('appNutri.controllers')
 			edit: false,
 			delete: false
 		};
-		const url = {
-			get: 'mock/historicos.json',
-			post: '',
-			put: '',
-			delete: ''
-		};
-		const headers = {'Content-type': 'application/json;charset=utf-8'};
+
 		vm.title = {
 			home: "Histórico Alimentar",
 			new: "Novo",
 			edit: "Edição",
 			delete: "Tem certeza que deseja deletar esse histórico?"			
 		};
+		vm.refeicao = "Ainda não vem do banco";
+		vm.id = 1;
 		vm.historicos = [];
-
-		const date = new Date();
-		const email = { email: $rootScope.email };
-		const nutricionista = {nutricionista: $rootScope.nutricionista };
 
 		vm.getHistorico = getHistorico();
 		function getHistorico() {
+			const params = {
+				op: requests.get.op,
+				dados: { "email": email }
+			}
 			const req = {
-				url: url.get,
+				url: requests.get.url,
 				method: 'GET',
 				headers: headers,
-				params: email
+				params: params
 			}
 
 			$http(req).then(function(res) {
 				vm.historicos = res.data;
-			}, function(res, status) {
-				manageMessages.requisitionGetError(res, status);
+			}, function(res) {
+				manageMessages.requisitionGetError(res);
 			})
 		}
 
 		vm.newHistorico = newHistorico;
 		function newHistorico(historico) {
-			const data = {
-				id: 11,
-				email: email,
-				data: new Date(historico.data),
-				alimento: historico.alimento,
-				quantidade: historico.quantidade,
-				nutricionista: nutricionista
+			const params = {
+				op: requests.post.op,
+				dados: {
+					"id": 11,
+					"emailUsuario": email,
+					"dataIngestaoPaciente": historico.data,
+					"nomeAlimento": historico.alimento,
+					"quantidadeIngestaoPaciente": historico.quantidade
+				}
 			}
 
 			const req = {
-	 			url: url.post,
+	 			url: requests.post.op,
 				method: 'POST',
 	 			headers: headers,
-	 			data: data
+	 			data: params
 			}
 
 			$http(req).then(function(res){
@@ -75,16 +93,22 @@ angular.module('appNutri.controllers')
 
 		vm.editHistorico = editHistorico;
 		function editHistorico(historico) {
-			const data = {
-				historico: historico,
-				user: email
+			const params = {
+				op: requests.put.op,
+				dados: {
+					"id": 11,
+					"emailUsuario": email,
+					"dataIngestaoPaciente": historico.data,
+					"nomeAlimento": historico.alimento,
+					"quantidadeIngestaoPaciente": historico.quantidade
+				}
 			}
 
 			const req = {
-	 			url: url.put,
+	 			url: requests.put.url,
 				method: 'PUT',
 	 			headers: headers,
-	 			data: data
+	 			data: params
 			}
 
 			$http(req).then(function(res){
@@ -96,20 +120,19 @@ angular.module('appNutri.controllers')
 		}
 
 		vm.deleteHistorico = deleteHistorico;
-		function deleteHistorico(historicoId) {
-			const data = {
-				historicoId: historicoId,
-				user: email
+		function deleteHistorico(historico) {
+			const params = {
+				op: requests.delete.op,
+				dados: { "id": historico }
 			}
 			const req = {
-			    url: url.delete,
+			    url: requests.delete.url,
 			    method: 'DELETE',
 			    headers: headers,
-			    data: data
+			    data: params
 			};
 
 			$http(req).then(function(res) {
-			    console.log(res.data);
 			    vm.gethistorico();
 			}, function(res) {
 			    console.log(res.data);
@@ -126,6 +149,7 @@ angular.module('appNutri.controllers')
 		function changeVisibilityEdit(historico){		
 			$rootScope.show.edit = !($rootScope.show.edit);
 			$rootScope.show.home = !($rootScope.show.home);
+			console.log("changeVisibilityEdit", historico);
 			if($rootScope.show.edit)
 				fillFieldsEdit(historico);
 		}
@@ -140,25 +164,21 @@ angular.module('appNutri.controllers')
 
 		function fillFieldsDelete(historico){
 			vm.delete = {
-				alimento: historico.alimento,
-				quantidade: historico.quantidade,
-				id: historico.id,
-				refeicao: historico.refeicao,
-				data: new Date(historico.data.substring(3, 5).toString() + 
-						"/" + historico.data.substring(0, 2).toString() +
-						 "/" + historico.data.substring(6, 10).toString())
+				id: vm.id,
+				alimento: historico.nomeAlimento,
+				quantidade: historico.quantidadeIngestaoPaciente,
+				refeicao: vm.refeicao,
+				data: new Date(historico.dataIngestaoPaciente)
 			}
 		}
 
 		function fillFieldsEdit(historico){
 			vm.formEdit = {
-				alimento: historico.alimento,
-				quantidade: historico.quantidade,
-				id: historico.id,
-				refeicao: historico.refeicao,
-				data: new Date(historico.data.substring(3, 5).toString() + 
-						"/" + historico.data.substring(0, 2).toString() +
-						 "/" + historico.data.substring(6, 10).toString())
+				id: vm.id,
+				alimento: historico.nomeAlimento,
+				quantidade: historico.quantidadeIngestaoPaciente,
+				refeicao: vm.refeicao,
+				data: new Date(historico.dataIngestaoPaciente)
 			}
 		}
 

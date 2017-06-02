@@ -12,9 +12,7 @@ angular.module('appNutri.controllers')
 
 		vm.checkLembreme = checkLembreme();
 		function checkLembreme(){
-			console.log("checkLembreme")
 			if($localStorage.user_data){
-				console.log("primeiro if");
 				if($localStorage.user_data.lembreme){
 					vm.loginForm.email = $localStorage.user_data.email;
 					vm.loginForm.senha = $localStorage.user_data.senha;
@@ -46,10 +44,8 @@ angular.module('appNutri.controllers')
 			console.log(req);
 
 			$http(req).then(function(res) {
-				console.log(res);
 				accessFactory.checkAccess(res.data);
-			}, function(res) {
-				console.log(res, status);
+			}, function(res, status) {
 				manageMessages.requisitionGetError(res, status);
 			});
 

@@ -7,20 +7,19 @@
 				<div class="list-border col-xs-12" dir-paginate="historico in Historico.historicos|itemsPerPage:5" pagination-id="historico">
 					<p>
 						<strong>Data: </strong>
-						{{historico.data | date:'dd/MM/yyyy' }} - 
-						{{historico.dia_da_semana }}
+						{{historico.dataIngestaoPaciente | date:'dd/MM/yyyy' }} -  {{ historico.dataIngestaoPaciente | dayOfWeek}}
 					</p>
 					<p>
 						<strong>Alimento: </strong>
-						{{historico.alimento}}
+						{{historico.nomeAlimento}}
 					</p>
 					<p>
 						<strong>Quantidade: </strong>
-						{{historico.quantidade}}
+						{{historico.quantidadeIngestaoPaciente}}
 					</p>
 					<p>
 						<strong>Refeição: </strong>
-						{{historico.refeicao}}
+						{{Historico.refeicao}}
 					</p>
 					<p>
 						<button class="btn btn-warning col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityEdit(historico)">Editar</button>
