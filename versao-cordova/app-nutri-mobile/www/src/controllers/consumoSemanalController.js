@@ -21,11 +21,11 @@ angular.module('appNutri.controllers')
 
   		vm.getConsumo = getConsumo();
 		function getConsumo() {
+			
 			const params = {
 				op: "consumoSemana",
 				dados: { "email": email }
 			}
-
 			const req = {
 				url: url,
 				method: 'GET',
@@ -82,8 +82,8 @@ angular.module('appNutri.controllers')
 				}else{
 					console.log("The response is empty");
 				}
-			}), function(res, status){
-				manageMessages.requisitionGetError(res, status);
+			}), function(res){
+				manageMessages.requisitionGetError(res);
 			}
 		}
 	};

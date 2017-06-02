@@ -7,19 +7,19 @@
 				<div class="list-border col-xs-12" dir-paginate="historico in Historico.historicos|itemsPerPage:5" pagination-id="historico">
 					<p>
 						<strong>Data: </strong>
-						{{historico.dataIngestaoPaciente | date:'dd/MM/yyyy' }} -  {{ historico.dataIngestaoPaciente | dayOfWeek}}
+						{{ historico.dataIngestaoPaciente | date:'dd/MM/yyyy' }} -  {{ historico.dataIngestaoPaciente | dayOfWeek }}
 					</p>
 					<p>
 						<strong>Alimento: </strong>
-						{{historico.nomeAlimento}}
+						{{ historico.nomeAlimento }}
 					</p>
 					<p>
 						<strong>Quantidade: </strong>
-						{{historico.quantidadeIngestaoPaciente}}
+						{{ historico.quantidadeIngestaoPaciente }}
 					</p>
 					<p>
 						<strong>Refeição: </strong>
-						{{Historico.refeicao}}
+						{{ Historico.refeicao }}
 					</p>
 					<p>
 						<button class="btn btn-warning col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityEdit(historico)">Editar</button>
@@ -41,20 +41,20 @@
 <!-- CADASTRO DE UM NOVO RECORDATÓRIO -->
 <section data-ng-show="$root.show.new">
 	<h3 class="center">{{Historico.title.new}}</h3>
-	<form name="newForm" action="">
-		<div class="form-group" data-ng-class="{ 'has-error' : newForm.alimento.$invalid && !newForm.alimento.$pristine }">
+	<form name="Historico.newForm" action="">
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
 			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Historico.formNew.alimento" name="alimento" data-ng-minlength="4" required>
 		</div>
-		<div class="form-group" data-ng-class="{ 'has-error' : newForm.quantidade.$invalid && !newForm.quantidade.$pristine }">
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.quantidade.$invalid && !Historico.newForm.quantidade.$pristine }">
 			<label for="Quantidade">Quantidade</label>
 			<input type="number" class="form-control" placeholder="Quantidade" data-ng-model="Historico.formNew.quantidade" name="quantidade" min="1" required>
 		</div>
-		<div class="form-group" data-ng-class="{ 'has-error' : newForm.data.$invalid && !newForm.data.$pristine }">
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.data.$invalid && !Historico.newForm.data.$pristine }">
 			<label for="Data">Data</label>
 			<input type="date" class="form-control" data-ng-model="Historico.formNew.data" name="data" required>
 		</div>
-		<div class="form-group" data-ng-class="{ 'has-error' : newForm.refeicao.$invalid && !newForm.refeicao.$pristine }">
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.refeicao.$invalid && !Historico.newForm.refeicao.$pristine }">
 			<label for="Refeicao">Refeição</label>
 			<input type="text" class="form-control" placeholder="Refeição" data-ng-model="Historico.formNew.refeicao" name="refeicao" required>
 		</div>
@@ -62,7 +62,7 @@
 	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityNew()">
 		Voltar
 	</button>
-	<button data-ng-disabled="newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.newHistorico(Historico.formNew)">
+	<button data-ng-disabled="Historico.newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.newHistorico(Historico.formNew)">
 		Enviar
 	</button>
 </section>

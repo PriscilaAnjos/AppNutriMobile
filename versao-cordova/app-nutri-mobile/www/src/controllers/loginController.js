@@ -27,6 +27,7 @@ angular.module('appNutri.controllers')
 
 		vm.credentials = credentials;
 		function credentials(user) {
+			
 			const params = {
 				op: 'autenticacao',
 				dados: {
@@ -34,19 +35,17 @@ angular.module('appNutri.controllers')
 					"senha": user.senha
 				}
 			}
-			
 			const req = {
 				url: url,
 				method: 'GET',
 				headers: headers,
 				params: params
 			};
-			console.log(req);
 
 			$http(req).then(function(res) {
 				accessFactory.checkAccess(res.data);
-			}, function(res, status) {
-				manageMessages.requisitionGetError(res, status);
+			}, function(res) {
+				manageMessages.requisitionGetError(res);
 			});
 
 			if(vm.lembreme)

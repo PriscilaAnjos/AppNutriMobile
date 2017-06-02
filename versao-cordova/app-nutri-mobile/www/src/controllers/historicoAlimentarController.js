@@ -6,22 +6,10 @@ angular.module('appNutri.controllers')
 	function historicoAlimentar($http, $rootScope, manageMessages, $filter, $localStorage) {
 		const vm = this;
 		const requests = {
-			get: {
-				url: 'http://service.appnutri.ntr.br/Geral.service.php',
-				op: "consumoSemana" 
-			},
-			post: {
-				url: 'http://service.appnutri.ntr.br/Geral.service.php',
-				op: ""
-			},
-			put: {
-				url: 'http://service.appnutri.ntr.br/Geral.service.php',
-				op: ""
-			},
-			delete: {
-				url: 'http://service.appnutri.ntr.br/Geral.service.php',
-				op: ""
-			}
+			get: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "consumoSemana" },
+			post: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
+			put: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
+			delete: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" }
 		};
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
 		const email = $rootScope.user.emailUsuario;
@@ -70,12 +58,11 @@ angular.module('appNutri.controllers')
 				dados: {
 					"id": 11,
 					"emailUsuario": email,
-					"dataIngestaoPaciente": historico.data,
+					"dataIngestaoPaciente": $filter('date')(historico.data, 'yyyy-MM-dd'),
 					"nomeAlimento": historico.alimento,
 					"quantidadeIngestaoPaciente": historico.quantidade
 				}
 			}
-
 			const req = {
 	 			url: requests.post.op,
 				method: 'POST',
@@ -103,7 +90,6 @@ angular.module('appNutri.controllers')
 					"quantidadeIngestaoPaciente": historico.quantidade
 				}
 			}
-
 			const req = {
 	 			url: requests.put.url,
 				method: 'PUT',
@@ -143,13 +129,14 @@ angular.module('appNutri.controllers')
 		function changeVisibilityNew(){
 			$rootScope.show.new = !($rootScope.show.new);
 			$rootScope.show.home = !($rootScope.show.home);
+			if($rootScope.show.new)
+				resetFields();
 		}
 
 		vm.changeVisibilityEdit = changeVisibilityEdit;
 		function changeVisibilityEdit(historico){		
 			$rootScope.show.edit = !($rootScope.show.edit);
 			$rootScope.show.home = !($rootScope.show.home);
-			console.log("changeVisibilityEdit", historico);
 			if($rootScope.show.edit)
 				fillFieldsEdit(historico);
 		}
@@ -162,8 +149,20 @@ angular.module('appNutri.controllers')
 				fillFieldsDelete(historico);
 		}
 
-		function fillFieldsDelete(historico){
-			vm.delete = {
+		function resetFields() {
+			const formNull = {
+				id: '',
+				alimento: '',
+				quantidade: '',
+				refeicao: '',
+				data: ''
+			}
+            vm.formNew = angular.copy(formNull);
+			vm.newForm.$setPristine();
+		}
+
+		function fillFieldsEdit(historico){
+			vm.formEdit = {
 				id: vm.id,
 				alimento: historico.nomeAlimento,
 				quantidade: historico.quantidadeIngestaoPaciente,
@@ -172,8 +171,8 @@ angular.module('appNutri.controllers')
 			}
 		}
 
-		function fillFieldsEdit(historico){
-			vm.formEdit = {
+		function fillFieldsDelete(historico){
+			vm.delete = {
 				id: vm.id,
 				alimento: historico.nomeAlimento,
 				quantidade: historico.quantidadeIngestaoPaciente,
