@@ -1,11 +1,10 @@
 angular.module('appNutri.routers', ['ngRoute'])
 	.config(config);	
 
-	config.$inject = ['$routeProvider', '$locationProvider', '$qProvider'];	
+	config.$inject = ['$routeProvider', '$qProvider'];	
 
-	function config($routeProvider, $locationProvider, $qProvider){
-        $qProvider.errorOnUnhandledRejections(false);
-
+	function config($routeProvider, $qProvider){
+        
 		$routeProvider
 			.when('/', {
 				templateUrl: 'src/views/login.html',

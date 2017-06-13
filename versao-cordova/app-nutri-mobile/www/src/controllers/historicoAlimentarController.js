@@ -9,7 +9,8 @@ angular.module('appNutri.controllers')
 			get: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "consumoSemana" },
 			post: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
 			put: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
-			delete: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" }
+			delete: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
+			alimentoGet: {url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "buscaAlimento"}
 		};
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
 		const email = $rootScope.user.emailUsuario;
@@ -18,14 +19,16 @@ angular.module('appNutri.controllers')
 			home: true,
 			new: false,
 			edit: false,
-			delete: false
+			delete: false,
+			alimento: false
 		};
 
 		vm.title = {
 			home: "Histórico Alimentar",
 			new: "Novo",
 			edit: "Edição",
-			delete: "Tem certeza que deseja deletar esse histórico?"			
+			delete: "Tem certeza que deseja deletar esse histórico?",
+			alimento: "Selecione um alimento"			
 		};
 		vm.refeicao = "Ainda não vem do banco";
 		vm.id = 1;
@@ -175,5 +178,48 @@ angular.module('appNutri.controllers')
 			}
 		}
 
+		vm.alimentos = [];
+
+		vm.getAlimentos = getAlimentos();
+		function getAlimentos() {
+			const params = {
+				op: "buscaAlimento",
+				dados: { "alimento": "arroz" }
+			}
+			const req = {
+				url: 'http://service.appnutri.ntr.br/Geral.service.php',
+				method: 'GET',
+				headers: headers,
+				params: params
+			}
+
+			console.log(req);
+
+			$http(req).then(function(res) {
+				console.log(res);
+				vm.alimentos = res.data;
+			}, function(res) {
+				manageMessages.requisitionGetError(res);
+			});
+		}
+
+		vm.changeVisibilityAlimento = changeVisibilityAlimento;
+		function changeVisibilityAlimento(origin){		
+			$rootScope.show.alimento = !($rootScope.show.alimento);
+			if(origin == 'new')
+				$rootScope.show.new = !($rootScope.show.new);
+			if(origin == 'edit')
+				$rootScope.show.edit = !($rootScope.show.edit)
+		}
+
+		vm.alimentoSelecionado = alimentoSelecionado;
+		function alimentoSelecionado(alimento){
+			changeVisibilityAlimento();
+			console.log(vm.alimento);
+			vm.alimento = alimento.nomeAlimento;
+		}
+
 		console.log("vm", vm);
 	};
+
+	

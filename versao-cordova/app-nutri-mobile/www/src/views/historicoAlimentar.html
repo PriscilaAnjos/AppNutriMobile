@@ -34,6 +34,9 @@
 		<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityNew()">
 			Novo
 		</button>
+		<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityAlimento()">
+			Alimentos
+		</button>
 		<br><br>
 	</div>
 </section>
@@ -41,11 +44,15 @@
 <!-- CADASTRO DE UM NOVO RECORDATÓRIO -->
 <section data-ng-show="$root.show.new">
 	<h3 class="center">{{Historico.title.new}}</h3>
-	<form name="Historico.newForm" action="">
+	
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
-			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Historico.formNew.alimento" name="alimento" data-ng-minlength="4" required>
+			<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityAlimento(new)" data-ng-model="Historico.alimento">
+			 	{{ Historico.alimento || 'Selecione um alimento' }}
+			</button>
 		</div>
+		
+	<form name="Historico.newForm" action="">
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.quantidade.$invalid && !Historico.newForm.quantidade.$pristine }">
 			<label for="Quantidade">Quantidade</label>
 			<input type="number" class="form-control" placeholder="Quantidade" data-ng-model="Historico.formNew.quantidade" name="quantidade" min="1" required>
@@ -133,4 +140,27 @@
 	<button class="btn btn-danger col-xs-4 col-xs-offset-2" data-ng-click="Historico.deleteHistorico(Historico.delete.id)">
 		Deletar
 	</button>
+</section>
+
+<!-- CONFIRMAÇÃO PARA A DELEÇÃO DE UM RECORDATÓRIO -->
+<section data-ng-show="$root.show.alimento">
+	<h3 class="center">{{Historico.title.alimento}}</h3>	
+	<br>
+	<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityAlimento()">
+		Voltar
+	</button>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-striped">
+					<tr data-ng-repeat="alimento in Historico.alimentos">
+						<td>{{alimento.nomeAlimento}}</td> 
+						<td><a ng-click="Historico.alimentoSelecionado(alimento)">Selecionar</td>
+					</tr>
+				</table>
+				<hr>
+				<br><br>
+			</div>
+		</div>
+	</div>	
 </section>
