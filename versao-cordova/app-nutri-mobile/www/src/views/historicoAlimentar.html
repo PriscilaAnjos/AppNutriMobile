@@ -47,11 +47,11 @@
 	
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
-			<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityAlimento(new)" data-ng-model="Historico.alimento">
+			<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityAlimento('new')" data-ng-model="Historico.alimento">
 			 	{{ Historico.alimento || 'Selecione um alimento' }}
 			</button>
 		</div>
-		
+
 	<form name="Historico.newForm" action="">
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.quantidade.$invalid && !Historico.newForm.quantidade.$pristine }">
 			<label for="Quantidade">Quantidade</label>
@@ -149,14 +149,16 @@
 	<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityAlimento()">
 		Voltar
 	</button>
+	<br>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
 				<table class="table table-striped">
-					<tr data-ng-repeat="alimento in Historico.alimentos">
+					<tr dir-paginate="alimento in Historico.alimentos|itemsPerPage:20" pagination-id="alimento">
 						<td>{{alimento.nomeAlimento}}</td> 
 						<td><a ng-click="Historico.alimentoSelecionado(alimento)">Selecionar</td>
 					</tr>
+					<dir-pagination-controls pagination-id="alimento" max-size="30" boundary-links="true"></dir-pagination-controls>
 				</table>
 				<hr>
 				<br><br>

@@ -205,10 +205,11 @@ angular.module('appNutri.controllers')
 
 		vm.changeVisibilityAlimento = changeVisibilityAlimento;
 		function changeVisibilityAlimento(origin){		
+			console.log("origin", origin);
 			$rootScope.show.alimento = !($rootScope.show.alimento);
 			if(origin == 'new')
 				$rootScope.show.new = !($rootScope.show.new);
-			if(origin == 'edit')
+			if(origin == vm.title.edit)
 				$rootScope.show.edit = !($rootScope.show.edit)
 		}
 

@@ -1,0 +1,25 @@
+<section>
+	<h3 class="center">{{Recomendacao.title}}</h3>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="list-border" dir-paginate="Recomendacao in Recomendacao.recomendacoes|itemsPerPage:5" pagination-id="recomendacao">
+					<p>
+						<strong>Orientação</strong>
+						{{Recomendacao.orientacao}}
+					</p>
+					<p>
+						<strong>Data</strong>
+						{{Recomendacao.data}}
+					</p>
+					<p>
+						<strong>Grupo</strong>
+						{{Recomendacao.grupo}}
+					</p>
+				</div>
+				<dir-pagination-controls pagination-id="recomendacao" max-size="5" boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>		
+	</div>
+</section>
