@@ -10,11 +10,13 @@ angular.module('appNutri.controllers')
 
 		vm.resetValues = resetValues;
 		function resetValues(){
-			$rootScope.show.home = true;
-			$rootScope.show.new = false;
-			$rootScope.show.edit = false;
-			$rootScope.show.delete = false;
-			$rootScope.show.alimento = false;
+			$rootScope.show = {
+				home: true,
+				new: false,
+				edit: false,
+				delete: false,
+				alimento: false
+			}
 		}
 
 	   	console.log("vm", vm);

@@ -139,11 +139,11 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<label><span class="glyphicon glyphicon-search"></label>
-				<input type="" name="" data-ng-model="search.nomeAlimento">
+				<input data-ng-model="search.nomeAlimento">
 			</div>
 			<div class="col-xs-12">
 				<table class="table table-striped">
-					<tr dir-paginate="alimento in Historico.alimentos|itemsPerPage:30|filter:search:true" pagination-id="alimentoList">
+					<tr dir-paginate="alimento in Historico.alimentos|itemsPerPage:30|filter:search" pagination-id="alimentoList">
 						<td>{{alimento.nomeAlimento}}</td> 
 						<td><a ng-click="Historico.alimentoSelecionado(alimento)">Selecionar</td>
 					</tr>

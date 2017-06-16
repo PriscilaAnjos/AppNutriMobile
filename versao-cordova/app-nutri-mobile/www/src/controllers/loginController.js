@@ -1,9 +1,9 @@
 angular.module('appNutri.controllers')
 	.controller("loginController", loginController);
 
-	loginController.$inject = ['$http', 'accessFactory', 'manageMessages', '$localStorage', '$rootScope'];
+	loginController.$inject = ['$http', 'accessFactory', 'manageMessages', '$localStorage'];
 
-	function loginController($http, accessFactory, manageMessages, $localStorage, $rootScope) {
+	function loginController($http, accessFactory, manageMessages, $localStorage) {
 		const vm = this;
 		const url = 'http://service.appnutri.ntr.br/Geral.service.php';
 		const headers = {'Content-type': 'application/json;charset=utf-8'};

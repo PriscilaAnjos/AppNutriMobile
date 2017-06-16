@@ -80,10 +80,13 @@ angular.module('appNutri.controllers')
 						}
 					});
 				}else{
+					vm.showConsumo = false;
 					console.log("The response is empty");
 				}
 			}), function(res){
 				manageMessages.requisitionGetError(res);
 			}
 		}
+
+		console.log("vm", vm);
 	};
