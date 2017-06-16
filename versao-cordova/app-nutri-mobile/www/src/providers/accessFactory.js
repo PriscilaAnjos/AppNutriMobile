@@ -5,26 +5,21 @@ angular.module('appNutri.providers')
 
 	function accessFactory($rootScope, $location) {
 
-		var access = false;
-
 		function checkAccess(user) {
 			console.log("checkAccess", user);
-			if(user.perfilUsuario){
-				$rootScope.user = user;
-				$location.path('/index');
-				access = true;
-			}else{
-				$location.path('/');
-				console.log(user);
+			if(user){
+				if(user.perfilUsuario){
+					$rootScope.user = user;
+					$location.path('/index');
+					return true;
+				}else{
+					return false;
+				}
+				return false;
 			}
 		}
 
-		function checkIndentification() {
-			return this.access;
-		}
-
 		return {
-			checkAccess: checkAccess,
-			checkIndentification: checkIndentification
+			checkAccess: checkAccess
 		}
 	};

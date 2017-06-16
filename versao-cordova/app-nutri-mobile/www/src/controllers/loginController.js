@@ -8,6 +8,7 @@ angular.module('appNutri.controllers')
 		const url = 'http://service.appnutri.ntr.br/Geral.service.php';
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
 	
+		vm.showError = false;
 		vm.lembreme = false;
 		vm.loginForm = {
 			email: "",
@@ -47,18 +48,26 @@ angular.module('appNutri.controllers')
 			};
 
 			$http(req).then(function(res) {
+				if(accessFactory.checkAccess(res.data)){
+					vm.showError = false;
+				}else{
+					vm.showError = true;
+				}
 				accessFactory.checkAccess(res.data);
 			}, function(res) {
 				manageMessages.requisitionGetError(res);
 			});
 
-			if(vm.lembreme)
-				saveLembreme(user);
+			if(vm.lembreme){
+				saveLembreme(user, true);
+			}else{
+				saveLembreme(user, false);
+			}
 		}
 
-		function saveLembreme(user){
+		function saveLembreme(user, lembreme){
 			$localStorage.user_data =  {
-				"lembreme": true,
+				"lembreme": lembreme,
 				"email": user.email,
 				"senha": user.senha
 			};

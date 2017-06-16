@@ -22,3 +22,7 @@
 .text-left {
 	text-align: left;
 }
+
+.error {
+	color: #F00;
+}

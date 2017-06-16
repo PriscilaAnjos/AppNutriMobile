@@ -64,14 +64,8 @@ angular.module('appNutri.controllers')
 
 		vm.newHistorico = newHistorico;
 		function newHistorico(historico) {
-			console.log('user');
-			console.log(user);
-			console.log('historico');
-			console.log(historico);
-			console.log('alimento');
-			console.log(vm.alimento);
 
-			const data = {
+			/*const data = {
 				op: requests.post.op,
 				dados: [{
 					"idPaciente": user.perfilUsuario,
@@ -81,33 +75,30 @@ angular.module('appNutri.controllers')
 					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
 					"quantidadeRecordatorioALimentar": historico.quantidade.toString()
 				}]
-			}
+			}*/
 
-			console.log(data);
-			/*const data = {
+			const data = {
 					"idPaciente": user.perfilUsuario,
 					"nomePaciente": user.nomeUsuario,
-					"idAlimento": vm.alimentoId,
-					"nomeAlimento": vm.alimento,
+					"idAlimento": vm.alimento.id,
+					"nomeAlimento": vm.alimento.nome,
 					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
 					"quantidadeRecordatorioALimentar": historico.quantidade
 				}
 
-			const url = requests.post.url + 'dados=[{"idPaciente":"'+data.idPaciente+'","nomePaciente":"'+data.nomePaciente+'","idAlimento":"'+data.idAlimento+'","nomeAlimento":"'+data.nomeAlimento+'","dataRecordatorioAlimentar":"'+data.dataRecordatorioAlimentar+'","quantidadeRecordatorioALimentar":"'+data.quantidadeRecordatorioALimentar+'"}]';
+			const url = requests.post.url + '?op='+requests.post.op+'&dados=[{"idPaciente":"'+data.idPaciente+'","nomePaciente":"'+data.nomePaciente+'","idAlimento":"'+data.idAlimento+'","nomeAlimento":"'+data.nomeAlimento+'","dataRecordatorioAlimentar":"'+data.dataRecordatorioAlimentar+'","quantidadeRecordatorioALimentar":"'+data.quantidadeRecordatorioALimentar+'"}]';
 
-			console.log("data", data);*/
+			console.log("data", data);
 
 			const req = {
-	 			url: requests.post.url,
+	 			url: url,
 				method: 'POST',
-	 			headers: headers,
-	 			data: data
+	 			headers: headers
 			}
 			console.log("req", req);
 
 			$http(req).then(function(res){
 				console.log(res);
-				vm.alimento = null;
 				changeVisibilityNew();
 				getHistorico();
 				cleanFields();
@@ -137,9 +128,10 @@ angular.module('appNutri.controllers')
 			}
 
 			$http(req).then(function(res){
-				vm.alimento = null;
-				vm.changeVisibilityEdit();
-				vm.getHistorico();
+				console.log(res);
+				changeVisibilityEdit();
+				getHistorico();
+				cleanFields();
 			}, function(res){
 				manageMessages.requisitionPostError(res);
 			});
@@ -159,7 +151,7 @@ angular.module('appNutri.controllers')
 			};
 
 			$http(req).then(function(res) {
-			    vm.getHistorico();
+			    getHistorico();
 			}, function(res) {
 			    console.log(res.data);
 			});
@@ -194,8 +186,7 @@ angular.module('appNutri.controllers')
 
 		function cleanFields() {
 			const fieldsNull = { id: '', quantidade: '', refeicao: '', data: '' }
-			vm.alimento.id = null;
-			vm.alimento.nome = null;
+			vm.alimento = { nome: '', id: '' }
             vm.formNew = angular.copy(fieldsNull);
 			vm.newForm.$setPristine();
 		}

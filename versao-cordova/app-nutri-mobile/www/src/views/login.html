@@ -18,6 +18,10 @@
 				</div>
 			</form>
 
+			<div data-ng-show="Login.showError" class="col-xs-12 error">
+				<p>Erro ao realizar login! Verifique que seus dados foram digitados corretamente e tente novamente!</p>
+			</div>
+
 			<button data-ng-disabled="formLogin.$invalid" class="btn btn-primary col-xs-12" data-ng-click="Login.credentials(Login.loginForm)" >
 			Login
 			</button>
