@@ -9,6 +9,10 @@ angular.module('appNutri.controllers')
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
 	
 		vm.lembreme = false;
+		vm.loginForm = {
+			email: "",
+			senha: ""
+		}
 
 		vm.checkLembreme = checkLembreme();
 		function checkLembreme(){

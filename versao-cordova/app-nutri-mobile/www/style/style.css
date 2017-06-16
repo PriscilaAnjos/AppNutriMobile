@@ -9,7 +9,6 @@
 .logo{
     margin: 0 auto;
     max-height: 200px;
-
 }
 
 .list-border {
@@ -18,4 +17,8 @@
 
 .center {
 	text-align: center;
+}
+
+.text-left {
+	text-align: left;
 }
