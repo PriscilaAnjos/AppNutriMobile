@@ -14,6 +14,7 @@ angular.module('appNutri.controllers')
 			$rootScope.show.new = false;
 			$rootScope.show.edit = false;
 			$rootScope.show.delete = false;
+			$rootScope.show.alimento = false;
 		}
 
 	   	console.log("vm", vm);

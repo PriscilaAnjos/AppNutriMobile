@@ -7,7 +7,7 @@ angular.module('appNutri.controllers')
 		const vm = this;
 		const requests = {
 			get: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "recordatorioGet" },
-			post: { url: 'http://service.appnutri.ntr.br/Geral.service.php?op=recordatorioPost&', op: "recordatorioPost" },
+			post: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "recordatorioPost" },
 			put: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
 			delete: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
 			alimentoGet: {url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "buscaAlimento"}
@@ -34,7 +34,11 @@ angular.module('appNutri.controllers')
 		vm.id = 1;
 		vm.historicos = [];
 		vm.showHistorico = false;
-		vm.alimentoId;
+		vm.alimentos = [];
+		vm.alimento = {
+			nome: null,
+			id: null
+		};
 
 		vm.getHistorico = getHistorico();
 		function getHistorico() {
@@ -60,17 +64,26 @@ angular.module('appNutri.controllers')
 
 		vm.newHistorico = newHistorico;
 		function newHistorico(historico) {
+			console.log('user');
+			console.log(user);
+			console.log('historico');
+			console.log(historico);
+			console.log('alimento');
+			console.log(vm.alimento);
+
 			const data = {
 				op: requests.post.op,
 				dados: [{
 					"idPaciente": user.perfilUsuario,
 					"nomePaciente": user.nomeUsuario,
-					"idAlimento": vm.alimentoId,
-					"nomeAlimento": vm.alimento,
+					"idAlimento": vm.alimento.id,
+					"nomeAlimento": vm.alimento.nome,
 					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
-					"quantidadeRecordatorioALimentar": historico.quantidade
+					"quantidadeRecordatorioALimentar": historico.quantidade.toString()
 				}]
 			}
+
+			console.log(data);
 			/*const data = {
 					"idPaciente": user.perfilUsuario,
 					"nomePaciente": user.nomeUsuario,
@@ -85,7 +98,7 @@ angular.module('appNutri.controllers')
 			console.log("data", data);*/
 
 			const req = {
-	 			url: url,
+	 			url: requests.post.url,
 				method: 'POST',
 	 			headers: headers,
 	 			data: data
@@ -97,6 +110,7 @@ angular.module('appNutri.controllers')
 				vm.alimento = null;
 				changeVisibilityNew();
 				getHistorico();
+				cleanFields();
 			}, function(res){
 				manageMessages.requisitionPostError(res);
 			});
@@ -106,13 +120,14 @@ angular.module('appNutri.controllers')
 		function editHistorico(historico) {
 			const data = {
 				op: requests.put.op,
-				dados: {
-					"id": 11,
-					"emailUsuario": email,
-					"dataIngestaoPaciente": $filter('date')(historico.data, 'yyyy-MM-dd'),
-					"nomeAlimento": vm.alimento,
-					"quantidadeIngestaoPaciente": historico.quantidade
-				}
+				dados: [{
+					"idPaciente": user.perfilUsuario,
+					"nomePaciente": user.nomeUsuario,
+					"idAlimento": vm.alimento.id,
+					"nomeAlimento": vm.alimento.nome,
+					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
+					"quantidadeRecordatorioALimentar": historico.quantidade.toString()
+				}]
 			}
 			const req = {
 	 			url: requests.put.url,
@@ -179,7 +194,8 @@ angular.module('appNutri.controllers')
 
 		function cleanFields() {
 			const fieldsNull = { id: '', quantidade: '', refeicao: '', data: '' }
-			vm.alimento = null;
+			vm.alimento.id = null;
+			vm.alimento.nome = null;
             vm.formNew = angular.copy(fieldsNull);
 			vm.newForm.$setPristine();
 		}
@@ -200,38 +216,23 @@ angular.module('appNutri.controllers')
 			}
 		}
 
-		vm.alimentos = [];
-
 		vm.getAlimentos = getAlimentos;
 		function getAlimentos() {
 			const params = {
-				op: "buscaAlimento",
-				dados: { "alimento": "arroz" }
+				op: requests.alimentoGet.op,
+				dados: { "alimento": "ALL" }
 			}
 			const req = {
-				url: 'http://service.appnutri.ntr.br/Geral.service.php',
+				url: requests.alimentoGet.url,
 				method: 'GET',
 				headers: headers,
 				params: params,
 				transformResponse: function (data, headersGetter, status) {
-        			return angular.toJson(data);
+        			return {response: angular.toJson(data)};
         		}
 			}
-
-			console.log(req);
-
 			$http(req).then(function(res) {
-				console.log(res);
-				vm.alimentos = res.data;
-				for(var i = 0; i < Object.keys(vm.alimentos).length; i++){
-					console.log(i);
-					console.log(vm.alimentos[i]);
-					angular.forEach(vm.alimentos[i], function(key, value){
-						console.log("inside forEach");
-						console.log(key + ":" + value);
-					})
-				}
-				console.log(vm.alimentos);
+				vm.alimentos = JSON.parse(angular.fromJson(res.data.response));
 			}, function(res) {
 				manageMessages.requisitionGetError(res);
 			});
@@ -239,14 +240,13 @@ angular.module('appNutri.controllers')
 
 		vm.changeVisibilityAlimento = changeVisibilityAlimento;
 		function changeVisibilityAlimento(origin){		
-			console.log("origin", origin);
 			$rootScope.show.alimento = !($rootScope.show.alimento);
 			if(origin == 'new')
 				$rootScope.show.new = !($rootScope.show.new);
 			if(origin == 'edit')
 				$rootScope.show.edit = !($rootScope.show.edit)
 			if($rootScope.show.alimento)
-				getAlimentos();
+				vm.getAlimentos();
 		}
 
 		vm.alimentoSelecionado = alimentoSelecionado;
@@ -256,10 +256,10 @@ angular.module('appNutri.controllers')
 			}else{
 				changeVisibilityAlimento('edit');
 			}
-			vm.alimento = alimento.nomeAlimento;
+			vm.alimento.nome = alimento.nomeAlimento;
 			angular.forEach(vm.alimentos, function(value, key){
-				if(value.nomeAlimento == vm.alimento)
-					vm.alimentoId = value.idAlimento;
+				if(value.nomeAlimento == vm.alimento.nome)
+					vm.alimento.id = value.idAlimento;
 			})
 		}
 

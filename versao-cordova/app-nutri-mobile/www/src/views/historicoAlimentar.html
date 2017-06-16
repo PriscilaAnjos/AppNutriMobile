@@ -10,7 +10,7 @@
 						{{ historico.dataRecordatorioAlimentar | date:'dd/MM/yyyy' }} -  {{ historico.dataRecordatorioAlimentar | dayOfWeek }}
 					</p>
 					<p>
-						<strong>Alimento: </strong>
+						<strong>AlimentoList: </strong>
 						{{ historico.nomeAlimento }}
 					</p>
 					<p>
@@ -31,7 +31,6 @@
 			Você ainda não possui nenhum histórico cadastrado.
 			<br><br>
 		</div>		
-		<br><br>	
 		<button class="btn btn-primary col-xs-12" data-ng-click="Historico.changeVisibilityNew()">
 			Novo
 		</button>
@@ -43,14 +42,11 @@
 <section data-ng-show="$root.show.new">
 	<h3 class="center">{{Historico.title.new}}</h3>
 	
-	<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
-		<label for="Alimento">Alimento</label>
-		<button class="btn btn-default col-xs-12 text-left" data-ng-click="Historico.changeVisibilityAlimento('new')" data-ng-model="Historico.alimento">
-		 	{{ Historico.alimento || 'Selecione um alimento' }}
-		</button>
-	</div>
-
 	<form name="Historico.newForm" action="">
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
+			<label for="Alimento">Alimento</label>
+			<input type="button" class="btn btn-default col-xs-12 text-left" data-ng-click="Historico.changeVisibilityAlimento('new')" data-ng-model="Historico.alimento" value="{{ Historico.alimento.nome || 'Selecione um alimento' }}">
+		</div>
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.quantidade.$invalid && !Historico.newForm.quantidade.$pristine }">
 			<label for="Quantidade">Quantidade</label>
 			<input type="number" class="form-control" placeholder="Quantidade" data-ng-model="Historico.formNew.quantidade" name="quantidade" min="1" required>
@@ -72,9 +68,9 @@
 <section data-ng-show="$root.show.edit">
 	<h3 class="center">{{Historico.title.edit}}</h3>	
 	<form name="editForm" action="">
-		<div class="form-group" data-ng-class="{ 'has-error' : editForm.alimento.$invalid && !editForm.alimento.$pristine }">
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
-			<input type="text" class="form-control" placeholder="Alimento" data-ng-model="Historico.formEdit.alimento" name="alimento" data-ng-minlength="4" required>
+			<input type="button" class="btn btn-default col-xs-12 text-left" data-ng-click="Historico.changeVisibilityAlimento('edit')" data-ng-model="Historico.alimento" value="{{ Historico.alimento.nome || 'Selecione um alimento' }}">
 		</div>
 		<div class="form-group" data-ng-class="{ 'has-error' : editForm.quantidade.$invalid && !editForm.quantidade.$pristine }">
 			<label for="Quantidade">Quantidade</label>
@@ -142,13 +138,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
+				<label><span class="glyphicon glyphicon-search"></label>
+				<input type="" name="" data-ng-model="search.nomeAlimento">
+			</div>
+			<div class="col-xs-12">
 				<table class="table table-striped">
-					<tr data-ng-repeat="alimento in Historico.alimentos track by $index">
+					<tr dir-paginate="alimento in Historico.alimentos|itemsPerPage:30|filter:search:true" pagination-id="alimentoList">
 						<td>{{alimento.nomeAlimento}}</td> 
 						<td><a ng-click="Historico.alimentoSelecionado(alimento)">Selecionar</td>
 					</tr>
 				</table>
-				<hr>
+				<dir-pagination-controls pagination-id="alimentoList" max-size="5" boundary-links="true"></dir-pagination-controls>
 				<br><br>
 			</div>
 		</div>
