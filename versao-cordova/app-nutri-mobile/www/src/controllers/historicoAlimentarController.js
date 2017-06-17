@@ -44,7 +44,7 @@ angular.module('appNutri.controllers')
 		function getHistorico() {
 			const params = {
 				op: requests.get.op,
-				dados: { "email": user.emailUsuario }
+				dados: { "email": user }
 			}
 			const req = {
 				url: requests.get.url,

@@ -6,23 +6,30 @@ angular.module('appNutri.controllers')
 	function recomendacoesNutricionais($http, $rootScope, manageMessages) {
 		const vm = this;
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
-		const url = 'mock/recomendacoes.json';
-		
+		const url = 'http://service.appnutri.ntr.br/Geral.service.php';
+		const op = 'orientacaoNutricional';
+		const user = $rootScope.user;
 		vm.title = "Recomendações nutricionais";
 		vm.recomendacoes = [];
 
 		vm.getRecomendacao = getRecomendacao();
-		function getRecomendacao() {
-			vm.recomendacoes = [];
-			const email = { email: $rootScope.email };
+		function getRecomendacao() {			
+			const params = {
+				op: "orientacaoNutricional",
+				dados: {
+					"nutricionista": "1",
+					"paciente": user.perfilUsuario
+				}
+			}
 			const req = {
 				url: url,
 				method: 'GET',
 				headers: headers,
-				params: email
+				params: params
 			}
 
 			$http(req).then(function(res) {
+				console.log("res", res);
 				vm.recomendacoes = res.data;
 			}, function(res) {
 				manageMessages.requisitionGetError(res);

@@ -21,6 +21,7 @@
     <allow-navigation href="https://*/*" />
     <allow-navigation href="data:*" />
     <allow-access href="http://service.appnutri.ntr.br/*" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="res/icon/android/ldpi.png" />
