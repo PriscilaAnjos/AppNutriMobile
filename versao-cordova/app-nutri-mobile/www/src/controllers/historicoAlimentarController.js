@@ -8,8 +8,8 @@ angular.module('appNutri.controllers')
 		const requests = {
 			get: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "recordatorioGet" },
 			post: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "recordatorioPost" },
-			put: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
-			delete: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "" },
+			put: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "recordatorioPut" },
+			delete: { url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "recordatorioDelete" },
 			alimentoGet: {url: 'http://service.appnutri.ntr.br/Geral.service.php', op: "buscaAlimento"}
 		};
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
@@ -111,25 +111,26 @@ angular.module('appNutri.controllers')
 		vm.editHistorico = editHistorico;
 		function editHistorico(historico) {
 			const data = {
-				op: requests.put.op,
-				dados: [{
-					"idPaciente": user.perfilUsuario,
+					"idPaciente": user.idPaciente,
 					"nomePaciente": user.nomeUsuario,
-					"idAlimento": vm.alimento.id,
-					"nomeAlimento": vm.alimento.nome,
+					"idAlimento": historico.id,
+					"nomeAlimento": historico.alimento,
 					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
-					"quantidadeRecordatorioALimentar": historico.quantidade.toString()
-				}]
-			}
-			const req = {
-	 			url: requests.put.url,
-				method: 'PUT',
-	 			headers: headers,
-	 			data: data
-			}
+					"quantidadeRecordatorioALimentar": historico.quantidade
+				}
 
+			const url = requests.put.url + '?op='+requests.put.op+'&dados=[{"idPaciente":"'+data.idPaciente+'","nomePaciente":"'+data.nomePaciente+'","idAlimento":"'+data.idAlimento+'","nomeAlimento":"'+data.nomeAlimento+'","dataRecordatorioAlimentar":"'+data.dataRecordatorioAlimentar+'","quantidadeRecordatorioALimentar":"'+data.quantidadeRecordatorioALimentar+'"}]';
+			
+			const req = {
+	 			url: url,
+				method: 'PUT',
+	 			headers: headers
+			}
+			
+			console.log("put req", req);
+			
 			$http(req).then(function(res){
-				console.log(res);
+				console.log("put res", res);
 				changeVisibilityEdit();
 				getHistorico();
 				cleanFields();
@@ -140,18 +141,26 @@ angular.module('appNutri.controllers')
 
 		vm.deleteHistorico = deleteHistorico;
 		function deleteHistorico(historico) {
+			
 			const data = {
-				op: requests.delete.op,
-				dados: { "id": historico }
+				"idPaciente": user.idPaciente,
+				"idAlimento": historico.id,
+				"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
 			}
+
+			const url = requests.delete.url + '?op='+requests.delete.op+'&dados=[{"idPaciente":"'+data.idPaciente+'","idAlimento":"'+data.idAlimento+'","dataRecordatorioAlimentar":"'+data.dataRecordatorioAlimentar+'"}]';
+
 			const req = {
-			    url: requests.delete.url,
+			    url: url,
 			    method: 'DELETE',
-			    headers: headers,
-			    data: data
+			    headers: headers
 			};
 
+			console.log("delete req", req);
+
 			$http(req).then(function(res) {
+				console.log("delete res", res);
+				changeVisibilityDelete();
 			    getHistorico();
 			}, function(res) {
 			    console.log(res.data);
@@ -196,6 +205,7 @@ angular.module('appNutri.controllers')
 			vm.formEdit = {
 				alimento: historico.nomeAlimento,
 				quantidade: historico.quantidadeRecordatorioALimentar,
+				id: historico.idAlimento,
 				data: new Date(historico.dataRecordatorioAlimentar)
 			}
 		}
@@ -204,7 +214,8 @@ angular.module('appNutri.controllers')
 			vm.delete = {
 				alimento: historico.nomeAlimento,
 				quantidade: historico.quantidadeRecordatorioALimentar,
-				data: new Date(historico.dataRecordatorioAlimentar)
+				id: historico.idAlimento,
+				data: historico.dataRecordatorioAlimentar
 			}
 		}
 
