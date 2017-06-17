@@ -34,6 +34,7 @@ angular.module('appNutri.controllers')
 			}
 
 			$http(req).then(function(res){
+				console.log(res);
 				const response = res.data;
 
 				if(Object.keys(response).length !== 0){

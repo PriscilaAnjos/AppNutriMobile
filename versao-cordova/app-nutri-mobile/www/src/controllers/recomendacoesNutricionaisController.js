@@ -18,7 +18,7 @@ angular.module('appNutri.controllers')
 				op: "orientacaoNutricional",
 				dados: {
 					"nutricionista": "1",
-					"paciente": user.perfilUsuario
+					"paciente": user.idPaciente
 				}
 			}
 			const req = {

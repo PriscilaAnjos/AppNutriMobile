@@ -44,7 +44,7 @@ angular.module('appNutri.controllers')
 		function getHistorico() {
 			const params = {
 				op: requests.get.op,
-				dados: { "email": user }
+				dados: { "email": user.emailUsuario }
 			}
 			const req = {
 				url: requests.get.url,
@@ -54,6 +54,7 @@ angular.module('appNutri.controllers')
 			}
 
 			$http(req).then(function(res) {
+				console.log(res);
 				vm.historicos = res.data;
 				if(Object.keys(vm.historicos).length !== 0)
 					vm.showHistorico = true;
@@ -65,20 +66,20 @@ angular.module('appNutri.controllers')
 		vm.newHistorico = newHistorico;
 		function newHistorico(historico) {
 
-			const data = {
+			/*const data = {
 				op: requests.post.op,
 				dados: [{
-					"idPaciente": user.perfilUsuario,
+					"idPaciente": user.idPaciente,
 					"nomePaciente": user.nomeUsuario,
 					"idAlimento": vm.alimento.id,
 					"nomeAlimento": vm.alimento.nome,
 					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
 					"quantidadeRecordatorioALimentar": historico.quantidade.toString()
 				}]
-			}
+			}*/
 
-			/*const data = {
-					"idPaciente": user.perfilUsuario,
+			const data = {
+					"idPaciente": user.idPaciente,
 					"nomePaciente": user.nomeUsuario,
 					"idAlimento": vm.alimento.id,
 					"nomeAlimento": vm.alimento.nome,
@@ -87,14 +88,13 @@ angular.module('appNutri.controllers')
 				}
 
 			const url = requests.post.url + '?op='+requests.post.op+'&dados=[{"idPaciente":"'+data.idPaciente+'","nomePaciente":"'+data.nomePaciente+'","idAlimento":"'+data.idAlimento+'","nomeAlimento":"'+data.nomeAlimento+'","dataRecordatorioAlimentar":"'+data.dataRecordatorioAlimentar+'","quantidadeRecordatorioALimentar":"'+data.quantidadeRecordatorioALimentar+'"}]';
-			*/
+			
 			console.log("data", data);
 
 			const req = {
-	 			url: requests.post.url,
+	 			url: url,
 				method: 'POST',
-	 			headers: headers,
-	 			data: data
+	 			headers: headers
 			}
 			console.log("req", req);
 
