@@ -1,7 +1,6 @@
 angular.module("appNutri.filters", [])
 	
-	.filter("dayOfWeek", dayOfWeek)
-	.filter("withoutSpace", withoutSpace);
+	.filter("dayOfWeek", dayOfWeek);
 	
 	dayOfWeek.$inject = ['$filter'];
 
@@ -21,10 +20,3 @@ angular.module("appNutri.filters", [])
 			}
 		}
 	};
-
-	function withoutSpace(){
-		return function(word){
-			var new_word = word.replace(" ", "%20");
-			return new_word;
-		}
-	}

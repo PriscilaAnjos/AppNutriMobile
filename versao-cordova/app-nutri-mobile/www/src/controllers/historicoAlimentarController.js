@@ -40,7 +40,7 @@ angular.module('appNutri.controllers')
 			id: null
 		};
 
-		vm.getHistorico = getHistorico();
+		$rootScope.getHistorico = getHistorico();
 		function getHistorico() {
 			const params = {
 				op: requests.get.op,
@@ -96,13 +96,14 @@ angular.module('appNutri.controllers')
 				method: 'POST',
 	 			headers: headers
 			}
-			console.log("req", req);
+			console.log("post req", req);
 
 			$http(req).then(function(res){
-				console.log(res);
-				changeVisibilityNew();
-				getHistorico();
+				console.log("post res", res);
 				cleanFields();
+				getHistorico();
+				changeVisibilityNew();
+				console.log("response")
 			}, function(res){
 				manageMessages.requisitionPostError(res);
 			});
@@ -131,9 +132,9 @@ angular.module('appNutri.controllers')
 			
 			$http(req).then(function(res){
 				console.log("put res", res);
-				changeVisibilityEdit();
+				vm.alimento = { nome: '', id: '' };
 				getHistorico();
-				cleanFields();
+				changeVisibilityEdit();
 			}, function(res){
 				manageMessages.requisitionPostError(res);
 			});
@@ -206,7 +207,9 @@ angular.module('appNutri.controllers')
 				alimento: historico.nomeAlimento,
 				quantidade: historico.quantidadeRecordatorioALimentar,
 				id: historico.idAlimento,
-				data: new Date(historico.dataRecordatorioAlimentar)
+				data: new Date(historico.dataRecordatorioAlimentar.substring(0, 4).toString() + 
+						 "/" + historico.dataRecordatorioAlimentar.substring(5, 7).toString() +
+						"/" + historico.dataRecordatorioAlimentar.substring(8, 10).toString())
 			}
 		}
 

@@ -12,7 +12,7 @@ angular.module('appNutri.controllers')
 		vm.title = "Recomendações nutricionais";
 		vm.recomendacoes = [];
 
-		vm.getRecomendacao = getRecomendacao();
+		$rootScope.getRecomendacao = getRecomendacao();
 		function getRecomendacao() {			
 			const params = {
 				op: "orientacaoNutricional",

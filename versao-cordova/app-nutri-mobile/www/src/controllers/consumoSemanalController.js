@@ -7,7 +7,7 @@ angular.module('appNutri.controllers')
 		const vm = this;
 		const url = 'http://service.appnutri.ntr.br/Geral.service.php';	
 		const headers = {'Content-type': 'application/json;charset=utf-8'};
-		const email = $rootScope.user.emailUsuario;
+		const user = $rootScope.user;
 	
 		vm.title = "Consumo Semanal";
 		vm.size_chart = {
@@ -19,12 +19,12 @@ angular.module('appNutri.controllers')
 		vm.quantidades = [];
 		vm.showConsumo = false;
 
-  		vm.getConsumo = getConsumo();
+  		$rootScope.getConsumo = getConsumo();
 		function getConsumo() {
 			
 			const params = {
-				op: "consumoSemana",
-				dados: { "email": email }
+				op: "recordatorioGet",
+				dados: { "email": user.emailUsuario }
 			}
 			const req = {
 				url: url,
@@ -40,11 +40,12 @@ angular.module('appNutri.controllers')
 				if(Object.keys(response).length !== 0){
 					vm.showConsumo = true;
 					var responseGroupBy = {};
+					console.log("inside if on consumoSemanal")
 					for (var i = 0; i < response.length; ++i) {
 						var objResponse = response[i];
 						if(responseGroupBy[objResponse.nomeAlimento] === undefined)
 								responseGroupBy[objResponse.nomeAlimento] = [objResponse.nomeAlimento];
-						responseGroupBy[objResponse.nomeAlimento].push(objResponse.quantidadeIngestaoPaciente);
+						responseGroupBy[objResponse.nomeAlimento].push(objResponse.quantidadeRecordatorioALimentar);
 					};
 
 					var chave;
@@ -72,7 +73,7 @@ angular.module('appNutri.controllers')
 					const limit = 5;
 					angular.forEach(orderByFilter(vm.consumos, 'quantidade', true), function(value, key) {
 						if(value.alimento && cont_al < limit){
-							vm.alimentos.push(value.alimentos);
+							vm.alimentos.push(value.alimento);
 							cont_al++;
 						}
 						if(value.quantidade && cont_qt < limit){

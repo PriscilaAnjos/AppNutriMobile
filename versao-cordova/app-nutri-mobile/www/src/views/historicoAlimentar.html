@@ -10,7 +10,7 @@
 						{{ historico.dataRecordatorioAlimentar | date:'dd/MM/yyyy' }} -  {{ historico.dataRecordatorioAlimentar | dayOfWeek }}
 					</p>
 					<p>
-						<strong>AlimentoList: </strong>
+						<strong>Alimento: </strong>
 						{{ historico.nomeAlimento }}
 					</p>
 					<p>
@@ -23,7 +23,8 @@
 					</p>
 					<br><br>
 				</div>
-				<dir-pagination-controls pagination-id="historico" max-size="50" boundary-links="true"></dir-pagination-controls>
+				<dir-pagination-controls pagination-id="historico" max-size="2" boundary-links="true"></dir-pagination-controls>
+				<!--<ul uib-pagination max-size="2" boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>-->
 			</div>
 		</div>
 		<div class="col-xs-12" data-ng-show="!Historico.showHistorico">
@@ -42,7 +43,7 @@
 <section data-ng-show="$root.show.new">
 	<h3 class="center">{{Historico.title.new}}</h3>
 	
-	<form name="Historico.newForm" action="">
+	<form name="Historico.newForm" novalidate>
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
 			<input type="button" class="btn btn-default col-xs-12 text-left" data-ng-click="Historico.changeVisibilityAlimento('new')" data-ng-model="Historico.alimento" value="{{ Historico.alimento.nome || 'Selecione um alimento' }}">
@@ -59,15 +60,15 @@
 	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityNew()">
 		Voltar
 	</button>
-	<button data-ng-disabled="Historico.newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.newHistorico(Historico.formNew)">
+	<bytton data-ng-disabled="Historico.newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.newHistorico(Historico.formNew)">
 		Enviar
-	</button>
+	</bytton>
 </section>
 
 <!-- ALTERAÇÃO DE UM RECORDATÓRIO -->
 <section data-ng-show="$root.show.edit">
 	<h3 class="center">{{Historico.title.edit}}</h3>	
-	<form name="editForm" action="">
+	<form name="editForm" novalidate>
 		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
 			<label for="Alimento">Alimento</label>
 			<input type="button" class="btn btn-default col-xs-12 text-left" data-ng-click="Historico.changeVisibilityAlimento('edit')" data-ng-model="Historico.alimento" value="{{ Historico.formEdit.alimento || 'Selecione um alimento' }}">
@@ -110,10 +111,6 @@
 					<p>
 						<strong>Quantidade: </strong>
 						{{Historico.delete.quantidade}}
-					</p>
-					<p>
-						<strong>id: </strong>
-						{{Historico.delete.idAlimento}}
 					</p>
 				</div>
 				<br><br>

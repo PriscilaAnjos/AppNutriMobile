@@ -17,6 +17,8 @@ angular.module('appNutri.controllers')
 				delete: false,
 				alimento: false
 			}
+
+			$rootScope.getHistorico;
 		}
 
 	   	console.log("vm", vm);

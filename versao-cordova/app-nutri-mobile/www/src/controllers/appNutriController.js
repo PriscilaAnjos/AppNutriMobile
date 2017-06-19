@@ -1,6 +1,9 @@
 angular.module('appNutri.controllers', [
 	'chart.js',
 	'ngStorage',
-	'angularUtils.directives.dirPagination'
+	'angularUtils.directives.dirPagination',
+	'ngAnimate', 
+	'ngSanitize', 
+	'ui.bootstrap'
 ]);
 
