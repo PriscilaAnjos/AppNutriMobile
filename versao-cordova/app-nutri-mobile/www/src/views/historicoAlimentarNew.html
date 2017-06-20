@@ -1,0 +1,22 @@
+	<h3 class="center">{{Historico.title.new}}</h3>
+	
+	<form name="Historico.newForm" novalidate>
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.alimento.$invalid && !Historico.newForm.alimento.$pristine }">
+			<label for="Alimento">Alimento</label>
+			<input type="button" class="btn btn-default col-xs-12 text-left" data-ng-click="Historico.changeVisibilityAlimento('new')" data-ng-model="Historico.alimento" value="{{ Historico.alimento.nome || 'Selecione um alimento' }}">
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.quantidade.$invalid && !Historico.newForm.quantidade.$pristine }">
+			<label for="Quantidade">Quantidade</label>
+			<input type="number" class="form-control" placeholder="Quantidade" data-ng-model="Historico.formNew.quantidade" name="quantidade" min="1" required>
+		</div>
+		<div class="form-group" data-ng-class="{ 'has-error' : Historico.newForm.data.$invalid && !Historico.newForm.data.$pristine }">
+			<label for="Data">Data</label>
+			<input type="date" class="form-control" data-ng-model="Historico.formNew.data" name="data" required>
+		</div>
+	</form>
+	<button class="btn btn-primary col-xs-4 col-xs-offset-1" data-ng-click="Historico.changeVisibilityNew()">
+		Voltar
+	</button>
+	<button data-ng-disabled="Historico.newForm.$invalid" class="btn btn-success col-xs-4 col-xs-offset-2" data-ng-click="Historico.newHistorico(Historico.formNew)">
+		Enviar
+	</button>

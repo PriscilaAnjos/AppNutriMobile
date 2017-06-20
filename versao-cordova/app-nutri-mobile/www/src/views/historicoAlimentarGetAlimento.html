@@ -1,0 +1,27 @@
+<h3 class="center">{{Historico.title.alimento}}</h3>	
+	<br>
+	<button class="btn btn-primary col-xs-12" data-ng-show="Historico.show.new" data-ng-click="Historico.changeVisibilityAlimento('new')">
+		Voltar
+	</button>
+	<button class="btn btn-primary col-xs-12" data-ng-show="Historico.show.edit" data-ng-click="Historico.changeVisibilityAlimento('edit')">
+		Voltar
+	</button>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<label><span class="glyphicon glyphicon-search"></label>
+				<input data-ng-model="search.nomeAlimento">
+			</div>
+			<div class="col-xs-12">
+				<table class="table table-striped">
+					<tr dir-paginate="alimento in Historico.alimentos|itemsPerPage:30|filter:search" pagination-id="alimentoList">
+						<td>{{alimento.nomeAlimento}}</td> 
+						<td><a ng-click="Historico.alimentoSelecionado(alimento)">Selecionar</td>
+					</tr>
+				</table>
+				<dir-pagination-controls pagination-id="alimentoList" max-size="5" boundary-links="true"></dir-pagination-controls>
+				<br><br>
+			</div>
+		</div>
+	</div>	

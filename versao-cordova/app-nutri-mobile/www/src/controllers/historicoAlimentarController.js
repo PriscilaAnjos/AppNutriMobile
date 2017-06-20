@@ -39,6 +39,7 @@ angular.module('appNutri.controllers')
 			nome: null,
 			id: null
 		};
+		vm.newForm = "";
 
 		$rootScope.getHistorico = getHistorico();
 		function getHistorico() {
@@ -65,18 +66,6 @@ angular.module('appNutri.controllers')
 
 		vm.newHistorico = newHistorico;
 		function newHistorico(historico) {
-
-			/*const data = {
-				op: requests.post.op,
-				dados: [{
-					"idPaciente": user.idPaciente,
-					"nomePaciente": user.nomeUsuario,
-					"idAlimento": vm.alimento.id,
-					"nomeAlimento": vm.alimento.nome,
-					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
-					"quantidadeRecordatorioALimentar": historico.quantidade.toString()
-				}]
-			}*/
 
 			const data = {
 					"idPaciente": user.idPaciente,
@@ -114,8 +103,8 @@ angular.module('appNutri.controllers')
 			const data = {
 					"idPaciente": user.idPaciente,
 					"nomePaciente": user.nomeUsuario,
-					"idAlimento": historico.id,
-					"nomeAlimento": historico.alimento,
+					"idAlimento": vm.alimento.id,
+					"nomeAlimento": vm.alimento.nome,
 					"dataRecordatorioAlimentar": $filter('date')(historico.data, 'yyyy-MM-dd'),
 					"quantidadeRecordatorioALimentar": historico.quantidade
 				}
@@ -199,18 +188,18 @@ angular.module('appNutri.controllers')
 			const fieldsNull = { id: '', quantidade: '', refeicao: '', data: '' }
 			vm.alimento = { nome: '', id: '' }
             vm.formNew = angular.copy(fieldsNull);
-			vm.newForm.$setPristine();
+			//vm.newForm.$setPristine();
 		}
 
 		function fillFieldsEdit(historico){
 			vm.formEdit = {
-				alimento: historico.nomeAlimento,
 				quantidade: historico.quantidadeRecordatorioALimentar,
 				id: historico.idAlimento,
 				data: new Date(historico.dataRecordatorioAlimentar.substring(0, 4).toString() + 
 						 "/" + historico.dataRecordatorioAlimentar.substring(5, 7).toString() +
 						"/" + historico.dataRecordatorioAlimentar.substring(8, 10).toString())
 			}
+			vm.alimento.nome = historico.nomeAlimento;
 		}
 
 		function fillFieldsDelete(historico){
@@ -244,20 +233,26 @@ angular.module('appNutri.controllers')
 			});
 		}
 
+		var alimentoSelecionadoStatus;
+
 		vm.changeVisibilityAlimento = changeVisibilityAlimento;
 		function changeVisibilityAlimento(origin){		
 			$rootScope.show.alimento = !($rootScope.show.alimento);
-			if(origin == 'new')
+			if(origin == 'new'){
 				$rootScope.show.new = !($rootScope.show.new);
-			if(origin == 'edit')
+				alimentoSelecionadoStatus = true;
+			}
+			if(origin == 'edit'){
 				$rootScope.show.edit = !($rootScope.show.edit)
+				alimentoSelecionadoStatus = false;
+			}
 			if($rootScope.show.alimento)
 				vm.getAlimentos();
 		}
 
 		vm.alimentoSelecionado = alimentoSelecionado;
 		function alimentoSelecionado(alimento){
-			if(vm.title.new){
+			if(alimentoSelecionadoStatus){
 				changeVisibilityAlimento('new');	
 			}else{
 				changeVisibilityAlimento('edit');
